@@ -1,0 +1,5 @@
+.mainText {
+	-fx-background-color: black ;
+	-fx-text-fill: white;
+	-fx-font-family: monospace;
+}

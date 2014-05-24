@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane layoutX="0.0" onKeyTyped="#handleKeyRelease" prefHeight="480.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controller.TestFormController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <Label fx:id="mainText" alignment="TOP_LEFT" prefHeight="385.0" prefWidth="572.0" styleClass="mainText" text="Labeltest" AnchorPane.bottomAnchor="81.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+      <stylesheets>
+        <URL value="@TestForm.css" />
+      </stylesheets>
+    </Label>
+    <Button mnemonicParsing="false" onAction="#handleDebugButton" prefWidth="141.0" text="Debug me!" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="14.0" />
+  </children>
+</AnchorPane>
