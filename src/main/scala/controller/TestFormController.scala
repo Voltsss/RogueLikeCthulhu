@@ -29,7 +29,7 @@ class TestFormController extends jfxf.Initializable{
   private def handleKeyRelease(event: jfxs.input.KeyEvent){
     println("releaseKey : " + event.getCharacter())
     mainText.setText(mainText.getText() + "\nDEBUG! key input : " + event.getCharacter())
-    mainText.setText(DungeonGenerator.makeDungeon("src/main/resources/test_dungeon.dun").map {_.map(_.parse).mkString}.mkString("\n"))
+    mainText.setText(DungeonGenerator.makeDungeon("/test_dungeon.dun").map {_.map(_.parse).mkString}.mkString("\n"))
   }
   
   def initialize(url:URL, rb : util.ResourceBundle){
