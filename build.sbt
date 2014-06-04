@@ -16,4 +16,6 @@ jarName in assembly := "roguelike-" + version.value + "_%tY%<tm%<td%<tH%<tM%<tS"
 
 mainClass in assembly := Some("controller.World")
 
+unmanagedResourceDirectories in Compile += { baseDirectory.value / "src/main/resources" }
+
 assemblySettings
