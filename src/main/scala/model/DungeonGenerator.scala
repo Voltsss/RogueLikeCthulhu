@@ -20,6 +20,7 @@ object DungeonGenerator {
   }
 
   def makeDungeon(fileName: String) = {
-    Source.fromFile(fileName).getLines.map(replaceRoguePanel).toVector
+    val file = getClass.getResourceAsStream(fileName)
+    Source.fromInputStream(file).getLines.map(replaceRoguePanel).toVector
   }
 }

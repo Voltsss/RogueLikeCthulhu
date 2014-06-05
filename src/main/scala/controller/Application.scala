@@ -12,7 +12,7 @@ import javafx.{scene => jfxs}
 
 
 object World extends JFXApp {
-  val fxml:String = "../view/TestForm.fxml"
+  val fxml:String = "/TestForm.fxml"
   val resource = getClass.getResource(fxml)
   if(resource == null){
     throw new IOException("Cannot open fxml")
