@@ -17,9 +17,9 @@ object World extends JFXApp {
   if(resource == null){
     throw new IOException("Cannot open fxml")
   }
-  
+
   val root: jfxs.Parent = jfxf.FXMLLoader.load(resource)
-  
+
   stage = new JFXApp.PrimaryStage(){
     title = "Test, FXML"
     scene = new Scene(root)

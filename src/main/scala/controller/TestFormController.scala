@@ -18,20 +18,20 @@ import javafx.scene.{control => jfxsc}
 class TestFormController extends jfxf.Initializable{
   @FXML
   private var mainText: jfxsc.Label = _
-  
+
   @FXML
   private def handleDebugButton(event: jfxe.ActionEvent){
     println("fire DebugButton")
     mainText.setText("DEBUG!")
   }
-  
+
   @FXML
   private def handleKeyRelease(event: jfxs.input.KeyEvent){
     println("releaseKey : " + event.getCharacter())
     mainText.setText(mainText.getText() + "\nDEBUG! key input : " + event.getCharacter())
     mainText.setText(DungeonGenerator.makeTestDungeon.toAppearance)
   }
-  
+
   def initialize(url:URL, rb : util.ResourceBundle){
     mainText.setText("When Initialize inject TEXT")
   }
