@@ -12,7 +12,7 @@ libraryDependencies ++= Seq(
   "org.scalafx" % "scalafx_2.10" % "8.0.0-R4"
 )
 
-jarName in assembly := "roguelike-" + version.value + "_%tY%<tm%<td%<tH%<tM%<tS".format(new Date) + ".jar"
+jarName in assembly := "roguelike-" + version.value + ".jar"
 
 mainClass in assembly := Some("controller.World")
 
