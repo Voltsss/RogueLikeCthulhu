@@ -9,7 +9,7 @@ import javafx.scene.{control => jfxsc}
 import javafx.fxml.FXML
 import model._
 import model.panel._
-import model.DungeonGenerator
+import model.DungeonGenerator._
 import javafx.{event => jfxe}
 import javafx.{fxml => jfxf}
 import javafx.{scene => jfxs}
@@ -29,7 +29,7 @@ class TestFormController extends jfxf.Initializable{
   private def handleKeyRelease(event: jfxs.input.KeyEvent){
     println("releaseKey : " + event.getCharacter())
     mainText.setText(mainText.getText() + "\nDEBUG! key input : " + event.getCharacter())
-    mainText.setText(DungeonGenerator.makeDungeon("/test_dungeon.dun").map {_.map(_.parse).mkString}.mkString("\n"))
+    mainText.setText(DungeonGenerator.makeTestDungeon.toAppearance)
   }
   
   def initialize(url:URL, rb : util.ResourceBundle){
@@ -37,3 +37,4 @@ class TestFormController extends jfxf.Initializable{
   }
 
 }
+

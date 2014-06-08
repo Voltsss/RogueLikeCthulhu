@@ -2,18 +2,20 @@ package model.panel
 
 // Panel types
 abstract sealed trait PanelType
-object Wall extends PanelType { override def toString = "Wall" }
-object Door extends PanelType { override def toString = "Door" }
-object Way extends PanelType { override def toString = "Way" }
-object Floor extends PanelType { override def toString = "Floor" }
-object NothingPanel extends PanelType { override def toString = "NothingPanel" }
+case object Wall  extends PanelType
+case object Door  extends PanelType
+case object Way   extends PanelType
+case object Floor extends PanelType
+case object NothingPanel extends PanelType
 
-case class RoguePanel(panelType: PanelType, enterPerm: Boolean = false) {
-  def parse = panelType match {
-    case Wall => "#"
-    case Door => "+"
-    case Way => "*"
-    case Floor => "."
-    case _ => " "
+object PanelTypeImplicits {
+  implicit class PanelType2String(p: PanelType) {
+    def appearance = p match {
+      case Wall  => "#"
+      case Door  => "+"
+      case Way   => "*"
+      case Floor => "."
+      case _     => " "
+    }
   }
 }
