@@ -1,11 +1,11 @@
 package model
 
 import scala.io.Source
-import model.panel._
-import model.panel.PanelTypeImplicits._
+import model.param.PanelParam._
 
 object DungeonGenerator {
-  val replaceRoguePanel: String => Array[PanelType] = (str: String) => {
+
+  val replaceRoguePanel: String => Array[Panel] = (str: String) => {
     str map {
       (_: Char) match {
         case '1' => Floor
@@ -17,7 +17,7 @@ object DungeonGenerator {
     }
   }.toArray
 
-  private def makeDungeon(fileName: String): Array[Array[PanelType]] = {
+  private def makeDungeon(fileName: String): Array[Array[Panel]] = {
     val file = getClass.getResourceAsStream(fileName)
     Source.fromInputStream(file).getLines.map(replaceRoguePanel).toArray
   }
@@ -26,9 +26,9 @@ object DungeonGenerator {
   def makeTestDungeon = makeDungeon("/test_dungeon.dun")
 
   // TODO: Randomize Dungeon
-  def makeRandomDungeon = Array.ofDim[PanelType](1,0)
+  def makeRandomDungeon = Array.ofDim[Panel](1,0)
 
-  implicit class dungeon2String(dungeon: Array[Array[PanelType]]) {
+  implicit class dungeon2String(dungeon: Array[Array[Panel]]) {
     def toAppearance = dungeon.map {_.map(_.appearance).mkString}.mkString("\n")
   }
 }

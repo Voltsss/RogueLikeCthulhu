@@ -7,13 +7,13 @@ import javafx.{event => jfxe}
 import javafx.{scene => jfxs}
 import javafx.scene.{control => jfxsc}
 import javafx.fxml.FXML
-import model._
-import model.panel._
-import model.DungeonGenerator._
 import javafx.{event => jfxe}
 import javafx.{fxml => jfxf}
 import javafx.{scene => jfxs}
 import javafx.scene.{control => jfxsc}
+
+import model._
+import model.DungeonGenerator._
 
 class TestFormController extends jfxf.Initializable{
   @FXML
@@ -37,4 +37,3 @@ class TestFormController extends jfxf.Initializable{
   }
 
 }
-
