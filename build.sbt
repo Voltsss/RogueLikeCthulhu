@@ -18,3 +18,5 @@ jarName in assembly := "roguelike-" + version.value + ".jar"
 mainClass in assembly := Some("controller.World")
 
 assemblySettings
+
+unmanagedJars in Compile += Attributed.blank(file(System.getenv("JAVA_HOME") + "/jre/lib/ext/jfxrt.jar"))
