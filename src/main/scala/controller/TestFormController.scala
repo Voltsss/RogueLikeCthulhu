@@ -15,16 +15,18 @@ import javafx.scene.{control => jfxsc}
 import model._
 import model.DungeonGenerator._
 
-import controller.InGameController._
+import view._
 
 class TestFormController extends jfxf.Initializable{
-  class TestPlayer extends Chracter {
+  class TestPlayer extends Character {
     val position = Position(20,40)
-    val cp = ChracterParameter()
+    val cp = CharacterParameter()
   }
 
-  val testPlayer
-  val inGameController
+  val testPlayer = new TestPlayer
+  val inGameViewController = new InGameViewController
+  val inGameController = new InGameController(inGameViewController)
+
 
   @FXML
   private var mainText: jfxsc.Label = _
@@ -47,13 +49,6 @@ class TestFormController extends jfxf.Initializable{
 
   def initialize(url:URL, rb : util.ResourceBundle){
     mainText.setText("When Initialize inject TEXT")
-    // インゲームリソースのセットアップ
-    testPlayer = new TestPrayer // 仮データ
-    // インゲームビューを立ち上げ
-    inGameViewController = new InGameViewController
-    // インゲーム部分のコントローラを立ち上げ
-    inGameController = new InGameController(inGameViewController)
-
   }
 
 }
