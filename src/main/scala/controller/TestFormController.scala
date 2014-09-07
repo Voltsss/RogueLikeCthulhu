@@ -18,12 +18,12 @@ import model.DungeonGenerator._
 import view._
 
 class TestFormController extends jfxf.Initializable{
-  class TestPlayer extends Character {
-    val position = Position(20,40)
-    val cp = CharacterParameter()
-  }
+  //class TestPlayer extends Character {
+  //  val position = Position(20,40)
+  //  val cp = CharacterParameter()
+  //}
 
-  val testPlayer = new TestPlayer
+  //val testPlayer = new TestPlayer
   val inGameViewController = new InGameViewController
   val inGameController = new InGameController(inGameViewController)
 

@@ -1,5 +1,7 @@
 package controller
 
+import model._
+
 import view._
 import javafx.{scene => jfxs}
 
@@ -19,6 +21,12 @@ case object StayAttack extends InputOrder
 case object NoneInput extends InputOrder
 
 class InGameController(view: InGameViewController) {
+  class TestPlayer extends Character {
+    val position = Position(20,40)
+    val cp = CharacterParameter()
+  }
+  val testPlayer = new TestPlayer
+
 
   def handleKeyInput(event : jfxs.input.KeyEvent){
     val inputKey:InputOrder = event.getCharacter() match {
@@ -35,6 +43,14 @@ class InGameController(view: InGameViewController) {
     }
 
     inputKey match {
+      case Up       =>  testPlayer.moveUp
+      case Right    =>  testPlayer.moveRight
+      case Left     =>  testPlayer.moveLeft
+      case Down     =>  testPlayer.moveDown
+      case _        =>  
+    }
+
+    inputKey match {
       case UpRight  =>  println("IngameController:UpRight")
       case Up       =>  println("IngameController:Up")
       case UpLeft   =>  println("IngameController:UpLeft")
@@ -48,6 +64,8 @@ class InGameController(view: InGameViewController) {
       case _        =>  println("IngameController:Error")
 
     }
+
+    println("testPlayerPosition" + testPlayer.getPosition)
   }
 
     
