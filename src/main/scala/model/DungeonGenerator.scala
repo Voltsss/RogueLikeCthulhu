@@ -29,6 +29,6 @@ object DungeonGenerator {
   def makeRandomDungeon = Array.ofDim[Panel](1,0)
 
   implicit class dungeon2String(dungeon: Array[Array[Panel]]) {
-    def toAppearance = dungeon.map {_.map(_.appearance).mkString}.mkString("\n")
+    def toAppearance: String = dungeon.map {_.map(_.appearance).mkString}.mkString("\n")
   }
 }
