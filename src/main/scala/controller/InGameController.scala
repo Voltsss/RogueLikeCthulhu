@@ -22,7 +22,7 @@ case object NoneInput extends InputOrder
 
 class InGameController(view: InGameViewController) {
   class TestPlayer extends Character {
-    val position = Position(20,40)
+    val position = Position(40,20)
     val cp = CharacterParameter()
   }
   val testPlayer = new TestPlayer

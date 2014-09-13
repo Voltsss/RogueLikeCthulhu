@@ -14,6 +14,7 @@ import javafx.scene.{control => jfxsc}
 
 import model._
 import model.DungeonGenerator._
+import model.param.PanelParam._
 
 import view._
 
@@ -41,10 +42,32 @@ class TestFormController extends jfxf.Initializable{
   private def handleKeyRelease(event: jfxs.input.KeyEvent){
     println("TestPlayer:ReleaseKey : " + event.getCharacter())
     //mainText.setText(mainText.getText() + "\nDEBUG! key input : " + event.getCharacter())
-    //mainText.setText(DungeonGenerator.makeTestDungeon.toAppearance)
 
     // インゲームへの入力
     inGameController.handleKeyInput(event)
+
+    // 描画
+    val dungeon = dungeonConvert(DungeonGenerator.makeTestDungeon)
+    mainText.setText(atPlayer(dungeon).map {_.mkString}.mkString("\n"))
+  }
+
+  def atPlayer(dungeon:Array[Array[String]]):Array[Array[String]] = {
+    dungeon(inGameController.testPlayer.getPosition._2)(inGameController.testPlayer.getPosition._1) = "@"
+    dungeon
+  }
+
+  implicit class PanelParam2String(p: Panel) {
+    def appearance = p match {
+      case Wall  => "%"
+      case Door  => "+"
+      case Way   => "*"
+      case Floor => "."
+      case _     => " "
+    }
+  }
+
+  def dungeonConvert(dungeon:Array[Array[Panel]]):Array[Array[String]] = {
+    dungeon.map {_.map(_.appearance)}
   }
 
   def initialize(url:URL, rb : util.ResourceBundle){
