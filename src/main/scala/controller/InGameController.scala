@@ -21,11 +21,17 @@ case object StayAttack extends InputOrder
 case object NoneInput extends InputOrder
 
 class InGameController(view: InGameViewController) {
+
+  var menuMode:Boolean = false
+
+  // TODO reimplementation to NEW API : setNewgame
   class TestPlayer extends Character {
     val position = Position(40,20)
     val cp = CharacterParameter()
   }
   val testPlayer = new TestPlayer
+  view.deprecation_setInGameController(this)
+
 
 
   def handleKeyInput(event : jfxs.input.KeyEvent){
@@ -39,36 +45,51 @@ class InGameController(view: InGameViewController) {
       case "z"  =>  DownRight
       case "x"  =>  Down
       case "c"  =>  DownLeft
+      case "m"  =>  Menu
       case _    =>  NoneInput
     }
 
-    inputKey match {
-      case Up       =>  testPlayer.moveUp
-      case Right    =>  testPlayer.moveRight
-      case Left     =>  testPlayer.moveLeft
-      case Down     =>  testPlayer.moveDown
-      case _        =>  
-    }
+    if(menuMode == true)
+      menuKeyEvent(inputKey)
+    else
+      ingameKeyEvent(inputKey)
 
-    inputKey match {
-      case UpRight  =>  println("IngameController:UpRight")
-      case Up       =>  println("IngameController:Up")
-      case UpLeft   =>  println("IngameController:UpLeft")
-      case Right    =>  println("IngameController:Rignt")
-      case StayAttack=> println("IngameController:StayAttack")
-      case Left     =>  println("IngameController:Left")
-      case DownRight=>  println("IngameController:DownRight")
-      case Down     =>  println("IngameController:Down")
-      case DownLeft =>  println("IngameController:DownLeft")
-      case NoneInput=>  println("IngameController:NonInput")
-      case _        =>  println("IngameController:Error")
-
-    }
+    view.drawViewText()
 
     println("testPlayerPosition" + testPlayer.getPosition)
   }
 
-    
+  def ingameKeyEvent(input:InputOrder): Unit ={
+    input match {
+      case Up       =>  testPlayer.moveUp
+      case Right    =>  testPlayer.moveRight
+      case Left     =>  testPlayer.moveLeft
+      case Down     =>  testPlayer.moveDown
+      case Menu     =>  menuOpen
+      case _        =>  assert(false,"InGameInput : Undefined InputKey")
+    }
+  }
+
+  def menuKeyEvent(input: InputOrder): Unit ={
+    // TODO need menu API
+    input match {
+      case Menu   =>  menuClose
+      case _      =>  assert(false,"Menu: Error : undefined input key")
+    }
+  }
+
+  def menuOpen(): Unit ={
+    // TODO need menu API
+    menuMode=true
+    println("Menu: menu open")
+  }
+
+  def menuClose(): Unit ={
+    // TODO need menu API
+    menuMode=false
+    println("Menu: menu close")
+  }
+
 }
 
 
