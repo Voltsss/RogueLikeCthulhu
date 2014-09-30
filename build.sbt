@@ -10,6 +10,7 @@ scalaVersion := "2.10.3"
 
 libraryDependencies ++= Seq(
   "org.scalafx" % "scalafx_2.10" % "8.0.0-R4",
+  "com.chuusai" % "shapeless_2.10.3" % "2.0.0",
   "org.scalaz" % "scalaz-core_2.10" % "7.0.6"
 )
 
