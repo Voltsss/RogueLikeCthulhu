@@ -1,6 +1,8 @@
 package model
 
-trait Character {
+import view.Drawable
+
+trait Character extends Drawable {
 
   final case class Position(var x: Int, var y: Int)
   val position: Position

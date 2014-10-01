@@ -4,6 +4,7 @@ import model._
 
 import view._
 import javafx.{scene => jfxs}
+import model.DungeonGenerator
 
 abstract sealed class InputOrder
 case object Up extends InputOrder
@@ -28,11 +29,13 @@ class InGameController(view: InGameViewController) {
   class TestPlayer extends Character {
     val position = Position(40,20)
     val cp = CharacterParameter()
+    def draw (exScreen: Screen ) : Screen = {
+      overwritePositions(Array(DummyPosition(position.x,position.y)),exScreen,'@')
+    }
   }
+
   val testPlayer = new TestPlayer
   view.deprecation_setInGameController(this)
-
-
 
   def handleKeyInput(event : jfxs.input.KeyEvent){
     val inputKey:InputOrder = event.getCharacter() match {
@@ -49,10 +52,11 @@ class InGameController(view: InGameViewController) {
       case _    =>  NoneInput
     }
 
-    if(menuMode == true)
+    if(menuMode == true){
       menuKeyEvent(inputKey)
-    else
+    }else{
       ingameKeyEvent(inputKey)
+    }
 
     view.drawViewText()
 
