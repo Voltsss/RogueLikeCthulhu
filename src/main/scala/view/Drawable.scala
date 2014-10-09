@@ -13,8 +13,13 @@ trait Drawable {
     if ( pList.isEmpty ){
       exScreen
     }else{
-      overwritePositions(pList.tail,exScreen,char).updated(pList.head.x,exScreen(pList.head.x).updated(pList.head.y,Some(char.toString)))
+      overwritePoint(pList.head,overwritePositions(pList.tail,exScreen,char),char)
+      //overwritePositions(pList.tail,exScreen,char).updated(pList.head.x,exScreen(pList.head.x).updated(pList.head.y,Some(char.toString)))
     }
+  }
+
+  def overwritePoint( p:DummyPosition, exScreen:Screen,char:Char):Screen ={
+    exScreen.updated(p.x,exScreen(p.x).updated(p.y,Some(char.toString)))
   }
 
   def screenEmpty ( width : Int , height: Int ) : Screen = {

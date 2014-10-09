@@ -6,12 +6,6 @@ import controller._
 import model.DungeonGenerator
 import model.param.PanelParam._
 
-object viewVal {
-  val vmX: Int = 5
-  val vmY: Int = 3
-  val tpX: Int = 3
-  val tpY: Int = 3
-}
 
 class InGameViewController {
   private var viewLabel: jfxsc.Label = _
@@ -27,23 +21,19 @@ class InGameViewController {
   }
 
   def drawViewText(): Unit = {
+    // TODO get a data of dungeon
     val dungeonText : Array[Array[Option[String]]] = dungeonConvert(DungeonGenerator.makeTestDungeon)
+    val menu : Menu = new Menu
 
-    //    if (igc.menuMode == true){
-    //      viewLabel.setText(menuOverWrite(atPlayer(dungeonText)).map {_.mkString}.mkString("\n"))
-    //    }else{
-    //      viewLabel.setText((atPlayer(dungeonText)).map { _.mkString}.mkString("\n"))
-    //    }
+    val drawDungeon = igc.testPlayer.draw(dungeonText)
 
-    //    val text =if (igc.menuMode){
-    //      menuOverWrite(atPlayer(dungeonText)).map {_.mkString}.mkString("\n")
-    //    }else{
-    //      atPlayer(dungeonText).map { _.mkString}.mkString("\n")
-    //    }
-    //    viewLabel.setText(text)
+    val finalScreen = if(igc.menuMode){
+      menu.draw(drawDungeon)
+    }else{
+      drawDungeon
+    }
 
-
-    viewLabel.setText(igc.testPlayer.draw(dungeonText)
+    viewLabel.setText(finalScreen
       .map {
       _.map { x => x.getOrElse(" ")
       }.mkString
@@ -66,34 +56,19 @@ class InGameViewController {
   //    menuList.max.length + viewVal.tpY * 2
   //  }
 
-  def menuOverWrite(viewText: Array[Array[String]]): Array[Array[String]] = {
+  def menuOverWrite(viewText: Array[Array[Option[String]]]): Array[Array[Option[String]]] = {
     // TODO menu function list
     //
-
-    val xMax = viewText(0).size - viewVal.vmX
-    val yMax = viewText.size - viewVal.vmY
-
-    val menuList: Array[String] = Array("test1", "test2", "test3")
-
-
-    val menuWidth = if ((menuList.max.length + viewVal.tpX * 2) > (viewText(0).size - viewVal.vmX * 2)) {
-      viewText(0).size - viewVal.vmX * 2
-    } else {
-      menuList.max.length + viewVal.tpX * 2
-    }
-    val menuHeight = if ((menuList.size + viewVal.tpY * 2) > (viewText.size - viewVal.vmY * 2)) {
-      viewText.size - viewVal.vmY * 2
-    } else {
-      menuList.max.length + viewVal.tpY * 2
-    }
     // TODO 中断
+    // TODO 枠レイヤ生成＆オーバーレイ
 
-    // TODO Delete
-    viewText(20)(40) = "m"
-    viewText(20)(41) = "e"
-    viewText(20)(42) = "n"
-    viewText(20)(43) = "u"
-    viewText
+    val test : Menu = new Menu
+    test.draw(viewText)
+
+
+    // TODO menuTextを確保出来た長さで切断してオーバーレイ
+
+
   }
 
 
