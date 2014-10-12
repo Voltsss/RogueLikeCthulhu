@@ -1,4 +1,4 @@
 package model
 
-object lenses extends PositionLens
+object lenses extends PositionLens with FloorLens
 
