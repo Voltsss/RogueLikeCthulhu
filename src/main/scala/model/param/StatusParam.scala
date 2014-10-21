@@ -5,4 +5,4 @@ trait StatusParam {
   case object Active extends Status("Active")
 }
 
-object StatusParam
+object status extends StatusParam
