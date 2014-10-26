@@ -3,6 +3,7 @@ package controller
 import model._
 
 import view._
+import model.Position
 import javafx.{scene => jfxs}
 import model.DungeonGenerator
 
@@ -30,7 +31,7 @@ class InGameController(view: InGameViewController) {
     val position = Position(40,20)
     val cp = CharacterParameter()
     def draw (exScreen: Screen ) : Screen = {
-      overwritePositions(Array(DummyPosition(position.x,position.y)),exScreen,'@')
+      overwritePositions(Array(model.Position(position.x,position.y)),exScreen,'@')
     }
   }
 

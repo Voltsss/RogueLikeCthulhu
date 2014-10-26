@@ -4,12 +4,14 @@ package view
 /**
  * Created by volts on 14/09/28.
  */
+import model.Position
+
 trait Drawable {
   type Screen = Array[Array[Option[String]]]
-  case class DummyPosition(y:Int, x:Int)
+  //case class Position(y:Int, x:Int)
   def draw( exScreen: Screen ) : Screen
 
-  def overwritePositions ( pList : Array[DummyPosition], exScreen : Screen , char : Char) : Screen = {
+  def overwritePositions ( pList : Array[Position], exScreen : Screen , char : Char) : Screen = {
     if ( pList.isEmpty ){
       exScreen
     }else{
@@ -18,7 +20,7 @@ trait Drawable {
     }
   }
 
-  def overwritePoint( p:DummyPosition, exScreen:Screen,char:Char):Screen ={
+  def overwritePoint( p:Position, exScreen:Screen,char:Char):Screen ={
     exScreen.updated(p.x,exScreen(p.x).updated(p.y,Some(char.toString)))
   }
 

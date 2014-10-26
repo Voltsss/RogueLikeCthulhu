@@ -4,11 +4,17 @@ package view
  * Created by volts on 14/10/02.
  */
 
+import model.Position
+
 object viewVal {
-  val vmX: Int = 5
-  val vmY: Int = 3
-  val tpX: Int = 1
-  val tpY: Int = 1
+  val vmTop : Int = 3
+  val vmBot : Int = 1
+  val vmLeft : Int = 10
+  val vmRight : Int = 1
+  val tpTop : Int = 1
+  val tpBot : Int = 1
+  val tpLeft  : Int = 1
+  val tpRight : Int = 1
 }
 
 class Menu extends Drawable {
@@ -16,30 +22,50 @@ class Menu extends Drawable {
   val menuListTest = Array("test1","test2","test3")
 
   def draw(exScreen:Screen):Screen = {
-    menuListOverWrite(frameOverWrite(exScreen))
+    //menuListOverWrite(frameOverWrite(exScreen))
+    menuListOverWrite(frameOverWrite(backOverWrite(exScreen)))
   }
 
-  def frameOverWrite (exScreen : Screen) : Screen={
-    val menuWidth = if ((menuListTest.max.length + viewVal.tpX * 2) > (exScreen(0).size - viewVal.vmX * 2)) {
-      exScreen(0).size - viewVal.vmX * 2
+  def calcMenuWidth(exScreen : Screen):Int = {
+    if ((menuListTest.max.length + viewVal.tpLeft + viewVal.tpRight) > (exScreen(0).size - viewVal.vmLeft - viewVal.vmRight)) {
+      exScreen(0).size - viewVal.vmLeft - viewVal.vmRight
     } else {
-      menuListTest.max.length + viewVal.tpX * 2
+      menuListTest.max.length + viewVal.tpLeft + viewVal.tpRight
     }
-    val menuHeight = if ((menuListTest.size + viewVal.tpY * 2) > (exScreen.size - viewVal.vmY * 2)) {
-      exScreen.size - viewVal.vmY * 2
-    } else {
-      menuListTest.size + viewVal.tpY * 2
-    }
+  }
 
-    val topLine = (Array.range(viewVal.vmX ,viewVal.vmX+menuWidth+1) zip Stream.continually(viewVal.vmY)).map(t=>DummyPosition(x=t._2,y=t._1))
-    val buttomLine = (Array.range(viewVal.vmX,viewVal.vmX+menuWidth+1) zip Stream.continually(viewVal.vmY+menuHeight)).map(t=>DummyPosition(x=t._2,y=t._1))
-    val leftLine = (Array.range(viewVal.vmY ,viewVal.vmY+menuHeight+1) zip Stream.continually(viewVal.vmX)).map(t=>DummyPosition(x=t._1,y=t._2))
-    val rightLine = (Array.range(viewVal.vmY ,viewVal.vmY+menuHeight+1) zip Stream.continually(viewVal.vmX+menuWidth)).map(t=>DummyPosition(x=t._1,y=t._2))
+  def calcMenuHeight(exScreen : Screen):Int = {
+    if ((menuListTest.size + viewVal.tpTop + viewVal.tpBot) > (exScreen.size - viewVal.vmTop - viewVal.vmBot)) {
+      exScreen.size - viewVal.vmTop - viewVal.vmBot
+    } else {
+      menuListTest.size + viewVal.tpTop + viewVal.tpBot
+    }
+  }
+
+  def backOverWrite (exScreen : Screen) : Screen = {
+    val menuWidth = calcMenuWidth(exScreen)
+    val menuHeight = calcMenuHeight(exScreen)
+    val firstWidth = viewVal.vmLeft +1
+    val firstHeight = viewVal.vmTop +1
+    val spaceList = Array.fill(menuHeight)(" " * menuWidth)
+    var screen = exScreen
+    stringListOverWrite(exScreen,spaceList,firstWidth,firstHeight)
+  }
+
+  def frameOverWrite (exScreen : Screen) : Screen = {
+
+    val menuWidth = calcMenuWidth(exScreen)
+    val menuHeight = calcMenuHeight(exScreen)
+
+    val topLine = (Array.range(viewVal.vmLeft ,viewVal.vmLeft+menuWidth+2) zip Stream.continually(viewVal.vmTop)).map(t=>Position(x=t._2,y=t._1))
+    val buttomLine = (Array.range(viewVal.vmLeft,viewVal.vmLeft+menuWidth+2) zip Stream.continually(viewVal.vmTop+menuHeight)).map(t=>Position(x=t._2+1,y=t._1))
+    val leftLine = (Array.range(viewVal.vmTop ,viewVal.vmTop+menuHeight+2) zip Stream.continually(viewVal.vmLeft)).map(t=>Position(x=t._1,y=t._2))
+    val rightLine = (Array.range(viewVal.vmTop ,viewVal.vmTop+menuHeight+2) zip Stream.continually(viewVal.vmLeft+menuWidth)).map(t=>Position(x=t._1 ,y=t._2+1))
     val corner = Array(
-      DummyPosition(viewVal.vmX,viewVal.vmY),
-      DummyPosition(viewVal.vmX+menuWidth,viewVal.vmY),
-      DummyPosition(viewVal.vmX,viewVal.vmY+menuHeight),
-      DummyPosition(viewVal.vmX+menuWidth,viewVal.vmY+menuHeight))
+      Position(y=viewVal.vmLeft,x=viewVal.vmTop),
+      Position(y=viewVal.vmLeft+menuWidth+1,x=viewVal.vmTop),
+      Position(y=viewVal.vmLeft,x=viewVal.vmTop+menuHeight+1),
+      Position(y=viewVal.vmLeft+menuWidth+1,x=viewVal.vmTop+menuHeight+1))
 
     val topped = overwritePositions(topLine,exScreen,'-')
     val buttomed = overwritePositions(buttomLine,topped,'-')
@@ -59,11 +85,28 @@ class Menu extends Drawable {
         stringOverWrite(str.tail,index+1,owArray)
       }
     }
-    val firstWidth = viewVal.vmX + viewVal.tpX
-    val firstHeight = viewVal.vmY + viewVal.tpY
+    val firstWidth = viewVal.vmLeft + viewVal.tpLeft +1
+    val firstHeight = viewVal.vmTop + viewVal.tpTop +1
     var screen = exScreen
     for(menu <- menuListTest.zipWithIndex){
       screen = screen.updated(firstHeight+menu._2,stringOverWrite(menu._1,firstWidth,screen(firstHeight+menu._2)))
+    }
+    val returnScreen = screen
+    returnScreen
+  }
+
+  def stringListOverWrite(exScreen:Screen,strList:Array[String],paddingX:Int,paddingY:Int):Screen={
+    def stringOverWrite(str:String,index:Int,exArray:Array[Option[String]]):Array[Option[String]] = {
+      if (str.size == 0) {
+        exArray
+      } else {
+        val owArray = exArray.updated(index,Option(str.head.toString))
+        stringOverWrite(str.tail,index+1,owArray)
+      }
+    }
+    var screen = exScreen
+    for(menu <- strList.zipWithIndex){
+      screen = screen.updated(paddingY+menu._2,stringOverWrite(menu._1,paddingX,screen(paddingY+menu._2)))
     }
     val returnScreen = screen
     returnScreen
