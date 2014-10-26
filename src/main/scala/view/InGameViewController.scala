@@ -4,7 +4,7 @@ import javafx.scene.{control => jfxsc}
 
 import controller._
 import model.DungeonGenerator
-import model.param.PanelParam._
+import model.param.panel._
 
 
 class InGameViewController {
