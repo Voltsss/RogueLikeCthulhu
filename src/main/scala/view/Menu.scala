@@ -15,6 +15,8 @@ object viewVal {
   val tpBot : Int = 1
   val tpLeft  : Int = 1
   val tpRight : Int = 1
+  val cursorWidth : Int = 1
+  val cursor : String = ">"
 }
 
 class Menu extends Drawable {
@@ -27,10 +29,10 @@ class Menu extends Drawable {
   }
 
   def calcMenuWidth(exScreen : Screen):Int = {
-    if ((menuListTest.max.length + viewVal.tpLeft + viewVal.tpRight) > (exScreen(0).size - viewVal.vmLeft - viewVal.vmRight)) {
+    if ((menuListTest.max.length + viewVal.tpLeft + viewVal.tpRight + viewVal.cursorWidth) > (exScreen(0).size - viewVal.vmLeft - viewVal.vmRight)) {
       exScreen(0).size - viewVal.vmLeft - viewVal.vmRight
     } else {
-      menuListTest.max.length + viewVal.tpLeft + viewVal.tpRight
+      menuListTest.max.length + viewVal.tpLeft + viewVal.tpRight + viewVal.cursorWidth
     }
   }
 
@@ -85,7 +87,7 @@ class Menu extends Drawable {
         stringOverWrite(str.tail,index+1,owArray)
       }
     }
-    val firstWidth = viewVal.vmLeft + viewVal.tpLeft +1
+    val firstWidth = viewVal.vmLeft + viewVal.tpLeft + viewVal.cursorWidth + 1
     val firstHeight = viewVal.vmTop + viewVal.tpTop +1
     var screen = exScreen
     for(menu <- menuListTest.zipWithIndex){
