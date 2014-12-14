@@ -31,7 +31,7 @@ class InGameController(view: InGameViewController) {
     val position = Position(40,20)
     val cp = CharacterParameter()
     def draw (exScreen: Screen ) : Screen = {
-      overwritePositions(Array(model.Position(position.x,position.y)),exScreen,'@')
+      overwritePositions(Array(model.Position(position.y,position.x)),exScreen,'@')
     }
   }
 
