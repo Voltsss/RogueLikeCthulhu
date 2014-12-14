@@ -19,28 +19,28 @@ object viewVal {
   val cursor : String = ">"
 }
 
-class Menu extends Drawable {
+class Menu(cursorIndex:Int,menuList:Array[String]) extends Drawable {
   import scalaz._
-  val menuListTest = Array("test1","test2","test3")
+  //val menuListTest = Array("test1","test2","test3")
 
   def draw(exScreen:Screen):Screen = {
     //menuListOverWrite(frameOverWrite(exScreen))
-    menuListOverWrite(frameOverWrite(backOverWrite(exScreen)))
+    menuCursorOverWrite(menuListOverWrite(frameOverWrite(backOverWrite(exScreen))))
   }
 
   def calcMenuWidth(exScreen : Screen):Int = {
-    if ((menuListTest.max.length + viewVal.tpLeft + viewVal.tpRight + viewVal.cursorWidth) > (exScreen(0).size - viewVal.vmLeft - viewVal.vmRight)) {
+    if ((menuList.max.length + viewVal.tpLeft + viewVal.tpRight + viewVal.cursorWidth) > (exScreen(0).size - viewVal.vmLeft - viewVal.vmRight)) {
       exScreen(0).size - viewVal.vmLeft - viewVal.vmRight
     } else {
-      menuListTest.max.length + viewVal.tpLeft + viewVal.tpRight + viewVal.cursorWidth
+      menuList.max.length + viewVal.tpLeft + viewVal.tpRight + viewVal.cursorWidth
     }
   }
 
   def calcMenuHeight(exScreen : Screen):Int = {
-    if ((menuListTest.size + viewVal.tpTop + viewVal.tpBot) > (exScreen.size - viewVal.vmTop - viewVal.vmBot)) {
+    if ((menuList.size + viewVal.tpTop + viewVal.tpBot) > (exScreen.size - viewVal.vmTop - viewVal.vmBot)) {
       exScreen.size - viewVal.vmTop - viewVal.vmBot
     } else {
-      menuListTest.size + viewVal.tpTop + viewVal.tpBot
+      menuList.size + viewVal.tpTop + viewVal.tpBot
     }
   }
 
@@ -90,12 +90,29 @@ class Menu extends Drawable {
     val firstWidth = viewVal.vmLeft + viewVal.tpLeft + viewVal.cursorWidth + 1
     val firstHeight = viewVal.vmTop + viewVal.tpTop +1
     var screen = exScreen
-    for(menu <- menuListTest.zipWithIndex){
+    for(menu <- menuList.zipWithIndex){
       screen = screen.updated(firstHeight+menu._2,stringOverWrite(menu._1,firstWidth,screen(firstHeight+menu._2)))
     }
     val returnScreen = screen
     returnScreen
   }
+
+  def menuCursorOverWrite(exScreen:Screen):Screen = {
+    def stringOverWrite(str:String,index:Int,exArray:Array[Option[String]]):Array[Option[String]] = {
+      if (str.size == 0) {
+        exArray
+      } else {
+        val owArray = exArray.updated(index,Option(str.head.toString))
+        stringOverWrite(str.tail,index+1,owArray)
+      }
+    }
+    val firstWidth = viewVal.vmLeft + viewVal.tpLeft + 1
+    val firstHeight = viewVal.vmTop + viewVal.tpTop + 1
+    //val menuCursorIndex_tmp = 0
+    val screen = exScreen.updated(firstHeight+cursorIndex,stringOverWrite(viewVal.cursor,firstWidth,exScreen(firstHeight+cursorIndex)))
+    screen
+  }
+
 
   def stringListOverWrite(exScreen:Screen,strList:Array[String],paddingX:Int,paddingY:Int):Screen={
     def stringOverWrite(str:String,index:Int,exArray:Array[Option[String]]):Array[Option[String]] = {

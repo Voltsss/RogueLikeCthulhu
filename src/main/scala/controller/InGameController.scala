@@ -26,6 +26,12 @@ class InGameController(view: InGameViewController) {
 
   var menuMode:Boolean = false
 
+  val topMenuList = Array("item_tmp","status_tmp","option_tmp","debug_tmp")
+  var topMenuCursor:Int = 0
+  val topMenuCursorMax = 3
+
+
+
   // TODO reimplementation to NEW API : setNewgame
   class TestPlayer extends Character {
     val position = Position(40,20)
@@ -79,8 +85,11 @@ class InGameController(view: InGameViewController) {
     // TODO need menu API
     input match {
       case Menu   =>  menuClose
+      case Up     =>  topMenuCursor = if(topMenuCursor-1 < 0) topMenuCursorMax else topMenuCursor-1
+      case Down   =>  topMenuCursor = if(topMenuCursor+1 > topMenuCursorMax) 0 else topMenuCursor+1
       case _      =>  assert(false,"Menu: Error : undefined input key")
     }
+    println(s"Cursor:$topMenuCursor")
   }
 
   def menuOpen(): Unit ={

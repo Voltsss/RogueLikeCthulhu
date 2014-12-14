@@ -23,12 +23,12 @@ class InGameViewController {
   def drawViewText(): Unit = {
     // TODO get a data of dungeon
     val dungeonText : Array[Array[Option[String]]] = dungeonConvert(DungeonGenerator.makeTestDungeon)
-    val menu : Menu = new Menu
+    val topMenu : Menu = new Menu(igc.topMenuCursor,igc.topMenuList)
 
     val drawDungeon = igc.testPlayer.draw(dungeonText)
 
     val finalScreen = if(igc.menuMode){
-      menu.draw(drawDungeon)
+      topMenu.draw(drawDungeon)
     }else{
       drawDungeon
     }
@@ -56,27 +56,6 @@ class InGameViewController {
   //    menuList.max.length + viewVal.tpY * 2
   //  }
 
-  def menuOverWrite(viewText: Array[Array[Option[String]]]): Array[Array[Option[String]]] = {
-    // TODO menu function list
-    //
-    // TODO 中断
-    // TODO 枠レイヤ生成＆オーバーレイ
-
-    val test : Menu = new Menu
-    test.draw(viewText)
-
-
-    // TODO menuTextを確保出来た長さで切断してオーバーレイ
-
-
-  }
-
-
-  private def atPlayer(dungeon: Array[Array[String]]): Array[Array[String]] = {
-    // TODO player.getPosition
-    dungeon(igc.testPlayer.getPosition._2)(igc.testPlayer.getPosition._1) = "@"
-    dungeon
-  }
 
   implicit class PanelParam2String(p: Panel) {
     def appearance = p match {
