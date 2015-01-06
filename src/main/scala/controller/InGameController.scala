@@ -1,10 +1,10 @@
 package controller
 
 import model._
-
 import view._
 import model.Position
 import javafx.{scene => jfxs}
+import javafx.scene.{input => jfxsi}
 import model.DungeonGenerator
 
 abstract sealed class InputOrder
@@ -24,12 +24,13 @@ case object NoneInput extends InputOrder
 
 class InGameController(view: InGameViewController) {
 
-  var menuMode:Boolean = false
+  var topMenuMode:Boolean = false
 
   val topMenuList = Array("item_tmp","status_tmp","option_tmp","debug_tmp")
   var topMenuCursor:Int = 0
   val topMenuCursorMax = 3
 
+  var topMenuChoice = ""
 
 
   // TODO reimplementation to NEW API : setNewgame
@@ -45,21 +46,22 @@ class InGameController(view: InGameViewController) {
   view.deprecation_setInGameController(this)
 
   def handleKeyInput(event : jfxs.input.KeyEvent){
-    val inputKey:InputOrder = event.getCharacter() match {
-      case "q"  =>  UpRight
-      case "w"  =>  Up
-      case "e"  =>  UpLeft
-      case "a"  =>  Right
-      case "s"  =>  StayAttack
-      case "d"  =>  Left
-      case "z"  =>  DownRight
-      case "x"  =>  Down
-      case "c"  =>  DownLeft
-      case "m"  =>  Menu
+    val inputKey:InputOrder = event.getCode() match {
+      case jfxsi.KeyCode.Q      =>  UpRight
+      case jfxsi.KeyCode.W      =>  Up
+      case jfxsi.KeyCode.E      =>  UpLeft
+      case jfxsi.KeyCode.D      =>  Right
+      case jfxsi.KeyCode.S      =>  StayAttack
+      case jfxsi.KeyCode.D      =>  Left
+      case jfxsi.KeyCode.Z      =>  DownRight
+      case jfxsi.KeyCode.X      =>  Down
+      case jfxsi.KeyCode.C      =>  DownLeft
+      case jfxsi.KeyCode.M      =>  Menu
+      case jfxsi.KeyCode.ENTER  =>  Enter
       case _    =>  NoneInput
     }
 
-    if(menuMode == true){
+    if(topMenuMode == true){
       menuKeyEvent(inputKey)
     }else{
       ingameKeyEvent(inputKey)
@@ -87,20 +89,20 @@ class InGameController(view: InGameViewController) {
       case Menu   =>  menuClose
       case Up     =>  topMenuCursor = if(topMenuCursor-1 < 0) topMenuCursorMax else topMenuCursor-1
       case Down   =>  topMenuCursor = if(topMenuCursor+1 > topMenuCursorMax) 0 else topMenuCursor+1
+      case Enter  =>  topMenuChoice = topMenuList(topMenuCursor) ; println("InGameController.menuKeyEvent:: MENU CHOICE=" + topMenuChoice)// 仮実装：選択内容に合わせて次の関数へのつなぎ
       case _      =>  assert(false,"Menu: Error : undefined input key")
     }
-    println(s"Cursor:$topMenuCursor")
   }
 
   def menuOpen(): Unit ={
     // TODO need menu API
-    menuMode=true
+    topMenuMode=true
     println("Menu: menu open")
   }
 
   def menuClose(): Unit ={
     // TODO need menu API
-    menuMode=false
+    topMenuMode=false
     println("Menu: menu close")
   }
 

@@ -27,7 +27,7 @@ class InGameViewController {
 
     val drawDungeon = igc.testPlayer.draw(dungeonText)
 
-    val finalScreen = if(igc.menuMode){
+    val finalScreen = if(igc.topMenuMode){
       topMenu.draw(drawDungeon)
     }else{
       drawDungeon

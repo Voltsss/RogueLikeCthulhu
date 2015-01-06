@@ -27,8 +27,14 @@ class TestFormController extends jfxf.Initializable{
   }
 
   @FXML
-  private def handleKeyRelease(event: jfxs.input.KeyEvent){
-    println("TestPlayer:ReleaseKey : " + event.getCharacter())
+  private def handleKeyTyped(event: jfxs.input.KeyEvent){
+    // インゲームへ入力移譲
+    // チャタリングを後日実装
+    //inGameController.handleKeyInput(event)
+  }
+
+  @FXML
+  private def handleKeyReleased(event: jfxs.input.KeyEvent): Unit ={
     // インゲームへ入力移譲
     inGameController.handleKeyInput(event)
   }
