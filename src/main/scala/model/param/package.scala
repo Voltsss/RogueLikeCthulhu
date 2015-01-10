@@ -1,3 +1,3 @@
 package model
 
-package object param extends StatusParam with PanelParam
+package object param extends PanelParam
