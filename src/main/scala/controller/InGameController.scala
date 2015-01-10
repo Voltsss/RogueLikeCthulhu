@@ -47,15 +47,15 @@ class InGameController(view: InGameViewController) {
 
   def handleKeyInput(event : jfxs.input.KeyEvent){
     val inputKey:InputOrder = event.getCode() match {
-      case jfxsi.KeyCode.Q      =>  UpRight
+      case jfxsi.KeyCode.Q      =>  UpLeft
       case jfxsi.KeyCode.W      =>  Up
-      case jfxsi.KeyCode.E      =>  UpLeft
-      case jfxsi.KeyCode.D      =>  Right
+      case jfxsi.KeyCode.E      =>  UpRight
+      case jfxsi.KeyCode.A      =>  Left
       case jfxsi.KeyCode.S      =>  StayAttack
-      case jfxsi.KeyCode.D      =>  Left
-      case jfxsi.KeyCode.Z      =>  DownRight
+      case jfxsi.KeyCode.D      =>  Right
+      case jfxsi.KeyCode.Z      =>  DownLeft
       case jfxsi.KeyCode.X      =>  Down
-      case jfxsi.KeyCode.C      =>  DownLeft
+      case jfxsi.KeyCode.C      =>  DownRight
       case jfxsi.KeyCode.M      =>  Menu
       case jfxsi.KeyCode.ENTER  =>  Enter
       case _    =>  NoneInput
@@ -78,7 +78,10 @@ class InGameController(view: InGameViewController) {
       case Right    =>  testPlayer.moveRight
       case Left     =>  testPlayer.moveLeft
       case Down     =>  testPlayer.moveDown
-      case Menu     =>  menuOpen
+      case Menu     =>  {
+        topMenuMode=true
+        view.topMenuOpen()
+      }
       case _        =>  assert(false,"InGameInput : Undefined InputKey")
     }
   }
@@ -86,24 +89,15 @@ class InGameController(view: InGameViewController) {
   def menuKeyEvent(input: InputOrder): Unit ={
     // TODO need menu API
     input match {
-      case Menu   =>  menuClose
-      case Up     =>  topMenuCursor = if(topMenuCursor-1 < 0) topMenuCursorMax else topMenuCursor-1
-      case Down   =>  topMenuCursor = if(topMenuCursor+1 > topMenuCursorMax) 0 else topMenuCursor+1
-      case Enter  =>  topMenuChoice = topMenuList(topMenuCursor) ; println("InGameController.menuKeyEvent:: MENU CHOICE=" + topMenuChoice)// 仮実装：選択内容に合わせて次の関数へのつなぎ
+      case Menu   =>  {
+        topMenuMode = false
+        view.topMenuClose()
+      }
+      case Up     =>  view.cursorUp()
+      case Down   =>  view.cursorDown()
+      case Enter  =>  view.decide()
       case _      =>  assert(false,"Menu: Error : undefined input key")
     }
-  }
-
-  def menuOpen(): Unit ={
-    // TODO need menu API
-    topMenuMode=true
-    println("Menu: menu open")
-  }
-
-  def menuClose(): Unit ={
-    // TODO need menu API
-    topMenuMode=false
-    println("Menu: menu close")
   }
 
 }

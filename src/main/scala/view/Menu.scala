@@ -19,9 +19,20 @@ object viewVal {
   val cursor : String = ">"
 }
 
-class Menu(cursorIndex:Int,menuList:Array[String]) extends Drawable {
-  import scalaz._
-  //val menuListTest = Array("test1","test2","test3")
+class Menu(menuList:Array[String]) extends Drawable {
+  var cursor:Int = 0
+  val cursorMax:Int = menuList.size-1
+
+  def cursorUp():Unit = {
+    cursor = if(cursor <= 0) cursorMax else cursor-1
+  }
+
+  def cursorDown():Unit = {
+    cursor = if(cursor >= cursorMax) 0 else cursor+1
+  }
+
+  //abstract def decide(): Unit
+
 
   def draw(exScreen:Screen):Screen = {
     //menuListOverWrite(frameOverWrite(exScreen))
@@ -109,7 +120,7 @@ class Menu(cursorIndex:Int,menuList:Array[String]) extends Drawable {
     val firstWidth = viewVal.vmLeft + viewVal.tpLeft + 1
     val firstHeight = viewVal.vmTop + viewVal.tpTop + 1
     //val menuCursorIndex_tmp = 0
-    val screen = exScreen.updated(firstHeight+cursorIndex,stringOverWrite(viewVal.cursor,firstWidth,exScreen(firstHeight+cursorIndex)))
+    val screen = exScreen.updated(firstHeight+cursor,stringOverWrite(viewVal.cursor,firstWidth,exScreen(firstHeight+cursor)))
     screen
   }
 
