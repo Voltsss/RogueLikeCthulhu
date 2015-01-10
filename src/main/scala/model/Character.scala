@@ -17,8 +17,8 @@ trait Character extends Drawable {
   def setX(x: Int): Unit = setPosition(x, position.y)
   def setY(y: Int): Unit = setPosition(position.x, y)
 
-  def moveRight = setX(position.x - 1)
-  def moveLeft  = setX(position.x + 1)
+  def moveRight = setX(position.x + 1)
+  def moveLeft  = setX(position.x - 1)
   def moveUp    = setY(position.y - 1)
   def moveDown  = setY(position.y + 1)
 
