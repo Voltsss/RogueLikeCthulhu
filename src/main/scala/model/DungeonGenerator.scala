@@ -1,7 +1,7 @@
 package model
 
 import scala.io.Source
-import model.param.panel._
+import model.param.Panel
 
 trait Generatable {
   type Field
@@ -15,14 +15,14 @@ trait GeneratorFromFile extends Generatable {
   val fileName: String
 
   private val replaceTable: Map[String, Panel] = Map(
-    "1" -> model.param.panel.Floor,  //TODO: Fix me!
-    "2" -> Wall,
-    "3" -> Door,
-    "4" -> Way
+    "1" -> Panel.Floor,
+    "2" -> Panel.Wall,
+    "3" -> Panel.Door,
+    "4" -> Panel.Way
   )
 
   private def replaceChar2Panel(str: String): Array[Panel] =
-    str.map{(c: Char) => replaceTable.getOrElse(c.toString, NothingPanel)}.toArray
+    str.map{(c: Char) => replaceTable.getOrElse(c.toString, Panel.NothingPanel)}.toArray
 
   def make: Field = {
     val file = getClass.getResourceAsStream(fileName)
