@@ -8,6 +8,8 @@ version := "0.0.1-SNAPSHOT"
 
 scalaVersion := "2.10.3"
 
+scalacOptions in Compile ++= Seq("-feature")
+
 libraryDependencies ++= Seq(
   "org.scalafx" % "scalafx_2.10" % "8.0.0-R4",
   "com.chuusai" % "shapeless_2.10.3" % "2.0.0",
