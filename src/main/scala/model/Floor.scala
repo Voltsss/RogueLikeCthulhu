@@ -4,7 +4,7 @@ import scalaz._
 import Scalaz._
 
 import lenses._
-import param.panel._
+import param.Panel
 
 case class Floor(data: Vector[Vector[Panel]])
 

@@ -1,7 +1,8 @@
 package model.param
 
-trait PanelParam {
-  abstract sealed class Panel(s: String)
+abstract sealed class Panel(val s: String)
+
+object Panel {
   case object Wall         extends Panel("Wall")
   case object Door         extends Panel("Door")
   case object Way          extends Panel("Way")
@@ -18,6 +19,4 @@ trait PanelParam {
     }
   }
 }
-
-object panel extends PanelParam
 

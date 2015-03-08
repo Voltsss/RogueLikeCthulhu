@@ -4,7 +4,7 @@ import javafx.scene.{control => jfxsc}
 
 import controller._
 import model.DungeonGenerator
-import model.param.panel._
+import model.param.Panel
 import scala.collection.mutable._
 
 class InGameViewController {
@@ -89,11 +89,11 @@ class InGameViewController {
 
   implicit class PanelParam2String(p: Panel) {
     def appearance = p match {
-      case Wall => "%"
-      case Door => "+"
-      case Way => "*"
-      case Floor => "."
-      case _ => " "
+      case Panel.Wall  => "%"
+      case Panel.Door  => "+"
+      case Panel.Way   => "*"
+      case Panel.Floor => "."
+      case _           => " "
     }
   }
 
