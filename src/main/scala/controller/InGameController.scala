@@ -32,6 +32,14 @@ class InGameController(view: InGameViewController) {
 
   var topMenuChoice = ""
 
+  private var current_dungeon:Floor = null
+  def setNewgame(): Unit ={
+    //TODO Create dungeon of 1st level
+    current_dungeon = DungeonGenerator.makeTestDungeon
+
+    //TODO Create initialized PlayerCharacter
+  }
+
 
   // TODO reimplementation to NEW API : setNewgame
   class TestPlayer extends Character {

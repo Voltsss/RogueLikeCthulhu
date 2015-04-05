@@ -3,11 +3,11 @@ package view
 import javafx.scene.{control => jfxsc}
 
 import controller._
-import model.DungeonGenerator
+import model.{FloorLens, DungeonGenerator, Floor}
 import model.param.Panel
 import scala.collection.mutable._
 
-class InGameViewController {
+class InGameViewController extends FloorLens {
   private var viewLabel: jfxsc.Label = _
   private var igc: InGameController = _
   private var menuStack: Stack[Menu] = Stack[Menu]()
@@ -46,7 +46,7 @@ class InGameViewController {
 
   def drawViewText(): Unit = {
     // TODO get a data of dungeon
-    val dungeonText : Array[Array[Option[String]]] = dungeonConvert(DungeonGenerator.makeTestDungeon)
+    val dungeonText : Vector[Vector[Option[String]]] = dungeonConvert(DungeonGenerator.makeTestDungeon)
     val topMenu : Menu = new Menu(igc.topMenuList)
 
     val drawDungeon = igc.testPlayer.draw(dungeonText)
@@ -97,8 +97,8 @@ class InGameViewController {
     }
   }
 
-  private def dungeonConvert(dungeon: Array[Array[Panel]]): Array[Array[Option[String]]] = {
-    dungeon.map { _.map( x => Option(x.appearance) ) }
+  private def dungeonConvert(floor: Floor): Vector[Vector[Option[String]]] = {
+    floor.data.map { _.map( x => Option(x.appearance) ) }
   }
 
 
