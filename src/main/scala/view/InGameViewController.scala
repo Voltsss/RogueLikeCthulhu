@@ -49,7 +49,7 @@ class InGameViewController extends FloorLens {
     val dungeonText : Vector[Vector[Option[String]]] = dungeonConvert(DungeonGenerator.makeTestDungeon)
     val topMenu : Menu = new Menu(igc.topMenuList)
 
-    val drawDungeon = igc.testPlayer.draw(dungeonText)
+    val drawDungeon = igc.player.draw(dungeonText)
 
 //    val finalScreen = if(igc.topMenuMode){
 //      topMenu.draw(drawDungeon)

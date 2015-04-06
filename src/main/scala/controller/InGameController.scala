@@ -33,25 +33,13 @@ class InGameController(view: InGameViewController) {
   var topMenuChoice = ""
 
   private var current_dungeon:Floor = null
-  private var player:Player = null
+  var player:Player = new Player()
   def setNewgame(): Unit ={
     //TODO Create dungeon of 1st level
     current_dungeon = DungeonGenerator.makeTestDungeon
     //TODO Create initialized PlayerCharacter
     player = new Player()
   }
-
-
-  // TODO reimplementation to NEW API : setNewgame
-  class TestPlayer extends Character {
-    val position = Position(40,20)
-    val cp = CharacterParameter()
-    def draw (exScreen: Screen ) : Screen = {
-      overwritePositions(Array(model.Position(position.y,position.x)),exScreen,'@')
-    }
-  }
-
-  val testPlayer = new TestPlayer
   view.deprecation_setInGameController(this)
 
   def handleKeyInput(event : jfxs.input.KeyEvent){
@@ -78,15 +66,15 @@ class InGameController(view: InGameViewController) {
 
     view.drawViewText()
 
-    println("testPlayerPosition" + testPlayer.getPosition)
+    println("testPlayerPosition" + player.getPosition)
   }
 
   def ingameKeyEvent(input:InputOrder): Unit ={
     input match {
-      case Up       =>  testPlayer.moveUp
-      case Right    =>  testPlayer.moveRight
-      case Left     =>  testPlayer.moveLeft
-      case Down     =>  testPlayer.moveDown
+      case Up       =>  player.moveUp
+      case Right    =>  player.moveRight
+      case Left     =>  player.moveLeft
+      case Down     =>  player.moveDown
       case Menu     =>  {
         topMenuMode=true
         view.topMenuOpen()
