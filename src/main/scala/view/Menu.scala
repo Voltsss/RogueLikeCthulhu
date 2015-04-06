@@ -5,6 +5,7 @@ package view
  */
 
 import model.Position
+import model.param.Panel
 
 object viewVal {
   val vmTop : Int = 3
@@ -90,7 +91,7 @@ class Menu(menuList:Array[String]) extends Drawable {
   }
 
   def menuListOverWrite(exScreen:Screen):Screen={
-    def stringOverWrite(str:String,index:Int,exArray:Array[Option[String]]):Array[Option[String]] = {
+    def stringOverWrite(str:String,index:Int,exArray:Vector[Option[String]]):Vector[Option[String]] = {
       if (str.size == 0) {
         exArray
       } else {
@@ -109,7 +110,7 @@ class Menu(menuList:Array[String]) extends Drawable {
   }
 
   def menuCursorOverWrite(exScreen:Screen):Screen = {
-    def stringOverWrite(str:String,index:Int,exArray:Array[Option[String]]):Array[Option[String]] = {
+    def stringOverWrite(str:String,index:Int,exArray:Vector[Option[String]]):Vector[Option[String]] = {
       if (str.size == 0) {
         exArray
       } else {
@@ -126,7 +127,7 @@ class Menu(menuList:Array[String]) extends Drawable {
 
 
   def stringListOverWrite(exScreen:Screen,strList:Array[String],paddingX:Int,paddingY:Int):Screen={
-    def stringOverWrite(str:String,index:Int,exArray:Array[Option[String]]):Array[Option[String]] = {
+    def stringOverWrite(str:String,index:Int,exArray:Vector[Option[String]]):Vector[Option[String]] = {
       if (str.size == 0) {
         exArray
       } else {

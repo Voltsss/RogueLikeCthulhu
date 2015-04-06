@@ -5,9 +5,10 @@ package view
  * Created by volts on 14/09/28.
  */
 import model.Position
+import model.param.Panel
 
 trait Drawable {
-  type Screen = Array[Array[Option[String]]]
+  type Screen = Vector[Vector[Option[String]]]
   //case class Position(y:Int, x:Int)
   def draw( exScreen: Screen ) : Screen
 
@@ -25,11 +26,11 @@ trait Drawable {
   }
 
   def screenEmpty ( width : Int , height: Int ) : Screen = {
-    Array.fill(width)(Array.fill(height)(Option.empty[String]))
+    Vector.fill(width)(Vector.fill(height)(Option.empty[String]))
   }
 
   def screenFill ( width : Int , height: Int , str : String ) : Screen = {
-    Array.fill(width)(Array.fill(height)( Some( str )))
+    Vector.fill(width)(Vector.fill(height)( Some( str )))
   }
 
   def appearance(sc : Screen): Unit ={

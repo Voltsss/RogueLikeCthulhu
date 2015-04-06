@@ -4,13 +4,10 @@ import scala.io.Source
 import model.param.Panel
 
 trait Generatable {
-  type Field
-
-  def make: Field
+  def make: Floor
 }
 
-trait GeneratorFromFile extends Generatable {
-  type Field = Array[Array[Panel]]
+trait GeneratorFromFile extends Generatable with FloorLens{
 
   val fileName: String
 
@@ -21,26 +18,17 @@ trait GeneratorFromFile extends Generatable {
     "4" -> Panel.Way
   )
 
-  private def replaceChar2Panel(str: String): Array[Panel] =
-    str.map{(c: Char) => replaceTable.getOrElse(c.toString, Panel.NothingPanel)}.toArray
+  private def replaceChar2Panel(str: String): Vector[Panel] =
+    str.map{(c: Char) => replaceTable.getOrElse(c.toString, Panel.NothingPanel)}.toVector
 
-  def make: Field = {
+  def make: Floor = {
     val file = getClass.getResourceAsStream(fileName)
-    Source.fromInputStream(file).getLines.map(replaceChar2Panel).toArray
+    new Floor(Source.fromInputStream(file).getLines.map(replaceChar2Panel).toVector)
   }
-}
-
-trait GeneratorRandom extends Generatable {
-  type Field = Array[Array[Panel]]
-
-  def make: Field = Array.ofDim[Panel](1, 0)
 }
 
 class TestDungeon extends GeneratorFromFile {
   val fileName = "/test_dungeon.dun"
-}
-
-class RandomDungeon extends GeneratorRandom {
 }
 
 
@@ -49,9 +37,9 @@ object DungeonGenerator {
 
   def makeTestDungeon = new TestDungeon make
 
-  def makeRandomDungeon = new RandomDungeon make
+  def makeRandomDungeon = new TestDungeon make
 
-  implicit class dungeon2String(dungeon: Array[Array[Panel]]) {
+  implicit class dungeon2String(dungeon: Vector[Vector[Panel]]) {
     def toAppearance: String = dungeon.map {_.map(_.appearance).mkString}.mkString("\n")
   }
 }
