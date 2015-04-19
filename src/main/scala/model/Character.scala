@@ -4,24 +4,25 @@ import view.Drawable
 
 trait Character extends Drawable {
 
-  final case class Position(var x: Int, var y: Int)
-  val position: Position
+  var position: Position
 
   def getPosition: (Int, Int) = (position.x, position.y)
 
   def setPosition(x: Int, y: Int): Unit = {
-    position.x = x
-    position.y = y
+    position = new Position(x,y)
   }
 
   def setX(x: Int): Unit = setPosition(x, position.y)
   def setY(y: Int): Unit = setPosition(position.x, y)
 
-  def moveRight = setX(position.x + 1)
-  def moveLeft  = setX(position.x - 1)
-  def moveUp    = setY(position.y - 1)
-  def moveDown  = setY(position.y + 1)
-
+  def moveRight = if(Hit.isEnter(Position(position.x + 1, position.y))) position = new Position(position.x + 1, position.y)
+  def moveLeft  = if(Hit.isEnter(Position(position.x - 1, position.y))) position = new Position(position.x - 1, position.y)
+  def moveUp    = if(Hit.isEnter(Position(position.x, position.y - 1))) position = new Position(position.x, position.y - 1)
+  def moveDown  = if(Hit.isEnter(Position(position.x, position.y + 1))) position = new Position(position.x, position.y + 1)
+  def moveUpRight = if(Hit.isEnter(Position(position.x + 1, position.y - 1))) position = new Position(position.x + 1, position.y - 1)
+  def moveUpLeft = if(Hit.isEnter(Position(position.x - 1, position.y - 1))) position = new Position(position.x - 1, position.y - 1)
+  def moveDownRight = if(Hit.isEnter(Position(position.x + 1, position.y + 1))) position = new Position(position.x + 1, position.y + 1)
+  def moveDownLeft = if(Hit.isEnter(Position(position.x - 1, position.y + 1))) position = new Position(position.x - 1, position.y + 1)
 
   final case class CharacterParameter(
     var experience: Int = 0,

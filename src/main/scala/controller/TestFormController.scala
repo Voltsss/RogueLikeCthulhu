@@ -42,6 +42,7 @@ class TestFormController extends jfxf.Initializable{
   def initialize(url:URL, rb : util.ResourceBundle){
     mainText.setText("When Initialize inject TEXT")
     inGameViewController.setLabel(mainText)
+    inGameController.setNewgame()
   }
 
 }

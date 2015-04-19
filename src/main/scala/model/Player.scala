@@ -3,8 +3,9 @@ package model
 /**
  * Created by volts on 15/04/06.
  */
+
 class Player extends Character{
-  val position = Position(40,20)
+  var position:Position = Position(40,20)
   val cp = CharacterParameter(
     experience   = 0,
     hitpoint     = 100,
