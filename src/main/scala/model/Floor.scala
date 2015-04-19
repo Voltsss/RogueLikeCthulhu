@@ -6,7 +6,11 @@ import Scalaz._
 import lenses._
 import param.Panel
 
-case class Floor(data: Vector[Vector[Panel]])
+case class Floor(data: Vector[Vector[Panel]]){
+  def isEnter(position: Position):Boolean = {
+    data(position.y).apply(position.x).isEnter
+  }
+}
 
 trait FloorLens {
 

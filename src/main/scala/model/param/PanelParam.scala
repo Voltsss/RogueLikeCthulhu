@@ -18,5 +18,15 @@ object Panel {
       case _     => " "
     }
   }
+
+  implicit class PanelEnterable(p:Panel) {
+    def isEnter = p match {
+      case Wall   => false
+      case Door   => true
+      case Way    => true
+      case Floor  => true
+      case _      => false
+    }
+  }
 }
 

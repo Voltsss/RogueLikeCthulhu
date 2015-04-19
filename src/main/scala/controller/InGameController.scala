@@ -37,6 +37,7 @@ class InGameController(view: InGameViewController) {
   def setNewgame(): Unit ={
     //TODO Create dungeon of 1st level
     current_dungeon = DungeonGenerator.makeTestDungeon
+    Hit.setFloor(current_dungeon)
     //TODO Create initialized PlayerCharacter
     player = new Player()
   }
@@ -75,6 +76,10 @@ class InGameController(view: InGameViewController) {
       case Right    =>  player.moveRight
       case Left     =>  player.moveLeft
       case Down     =>  player.moveDown
+      case UpRight  =>  player.moveUpRight
+      case UpLeft   =>  player.moveUpLeft
+      case DownRight=>  player.moveDownRight
+      case DownLeft =>  player.moveDownLeft
       case Menu     =>  {
         topMenuMode=true
         view.topMenuOpen()
