@@ -3,7 +3,7 @@ package view
 import javafx.scene.{control => jfxsc}
 
 import controller._
-import model.{Enemy, FloorLens, DungeonGenerator, Floor}
+import model.{FloorLens, DungeonGenerator, Floor}
 import model.param.Panel
 import scala.collection.mutable._
 
@@ -47,16 +47,23 @@ class InGameViewController extends FloorLens {
   def drawViewText(): Unit = {
     // TODO get a data of dungeon
     val dungeonText : Vector[Vector[Option[String]]] = dungeonConvert(DungeonGenerator.makeTestDungeon)
+    val topMenu : Menu = new Menu(igc.topMenuList)
 
-    val characterText = (igc.player +: igc.currentLevelEnemies).foldRight(dungeonText)((n,z)=> n.draw(z))
+    val drawDungeon = igc.player.draw(dungeonText)
 
-    val finalText = if(menuStack.isEmpty){
-      characterText
+//    val finalScreen = if(igc.topMenuMode){
+//      topMenu.draw(drawDungeon)
+//    }else{
+//      drawDungeon
+//    }
+
+    val finalScreen = if(menuStack.isEmpty){
+      drawDungeon
     }else{
-      menuStack.toList.foldRight(characterText)((n,z)=> n.draw(z))
+      menuStack.toList.foldRight(drawDungeon)((n,z)=> n.draw(z))
     }
 
-    viewLabel.setText(finalText
+    viewLabel.setText(finalScreen
       .map {
       _.map { x => x.getOrElse(" ")
       }.mkString
@@ -64,6 +71,20 @@ class InGameViewController extends FloorLens {
 
 
   }
+
+
+  //  val なになにがなになにの時 = (menuList.max.length + viewVal.tpX*2) > (viewText(0).size - viewVal.vmX*2)
+  //  val menuWidth = if(なになにがなになにの時){
+  //    viewText(0).size - viewVal.vmX * 2
+  //  }else{
+  //    menuList.max.length + viewVal.tpX * 2
+  //  }
+  //  val これこれがこれこれの時 = (menuList.size + viewVal.tpY * 2 ) > (viewText.size - viewVal.vmY*2)
+  //  val menuHeight = if(これこれがこれこれの時) {
+  //    viewText.size - viewVal.vmY * 2
+  //  }else{
+  //    menuList.max.length + viewVal.tpY * 2
+  //  }
 
 
   implicit class PanelParam2String(p: Panel) {

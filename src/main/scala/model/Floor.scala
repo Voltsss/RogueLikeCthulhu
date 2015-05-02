@@ -10,18 +10,6 @@ case class Floor(data: Vector[Vector[Panel]]){
   def isEnter(position: Position):Boolean = {
     data(position.y).apply(position.x).isEnter
   }
-
-  def getWidth() : Int = {
-    data(0).size
-  }
-
-  def getHeight() : Int = {
-    data.size
-  }
-
-  def getPanel(width : Int, height : Int) : Panel = {
-    data(height).apply(width)
-  }
 }
 
 trait FloorLens {

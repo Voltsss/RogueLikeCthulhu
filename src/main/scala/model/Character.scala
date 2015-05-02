@@ -8,11 +8,8 @@ trait Character extends Drawable {
 
   def getPosition: (Int, Int) = (position.x, position.y)
 
-  def setPosition(col: Int, row: Int): Unit = {
-    position = new Position(col,row)
-  }
-  def setPosition(position: Position): Unit = {
-    this.position = position
+  def setPosition(x: Int, y: Int): Unit = {
+    position = new Position(x,y)
   }
 
   def setX(x: Int): Unit = setPosition(x, position.y)
@@ -27,35 +24,33 @@ trait Character extends Drawable {
   def moveDownRight = if(Hit.isEnter(Position(position.x + 1, position.y + 1))) position = new Position(position.x + 1, position.y + 1)
   def moveDownLeft = if(Hit.isEnter(Position(position.x - 1, position.y + 1))) position = new Position(position.x - 1, position.y + 1)
 
+  final case class CharacterParameter(
+    var experience: Int = 0,
+    var hitpoint:   Int = 0,
+    var attack:     Int = 0,
+    var defence:    Int = 0,
+    var agility:    Int = 0,
+    var dexterity:  Int = 0,
+    var sanity:     Int = 0
+  )
+  val cp: CharacterParameter
 
-  val charaParam: CharacterParameter
+  def setExperience(v: Int) = cp.experience = v
+  def setHitpoint(v: Int)   = cp.hitpoint = v
+  def setAttack(v: Int)     = cp.attack = v
+  def setDefence(v: Int)    = cp.defence = v
+  def setAgility(v: Int)    = cp.agility = v
+  def setDexterity(v: Int)  = cp.dexterity = v
+  def setSanity(v: Int)     = cp.sanity = v
 
-  def setExperience(v: Int) = charaParam.experience = v
-  def setHitpoint(v: Int)   = charaParam.hitpoint = v
-  def setAttack(v: Int)     = charaParam.attack = v
-  def setDefence(v: Int)    = charaParam.defence = v
-  def setAgility(v: Int)    = charaParam.agility = v
-  def setDexterity(v: Int)  = charaParam.dexterity = v
-  def setSanity(v: Int)     = charaParam.sanity = v
+  def getExperience = cp.experience
+  def getHitpoint   = cp.hitpoint
+  def getAttack     = cp.attack
+  def getDefence    = cp.defence
+  def getAgility    = cp.agility
+  def getDexterity  = cp.dexterity
+  def getSanity     = cp.sanity
 
-  def getExperience = charaParam.experience
-  def getHitpoint   = charaParam.hitpoint
-  def getAttack     = charaParam.attack
-  def getDefence    = charaParam.defence
-  def getAgility    = charaParam.agility
-  def getDexterity  = charaParam.dexterity
-  def getSanity     = charaParam.sanity
-
-  def getLevel = charaParam.experience / 10
+  def getLevel = cp.experience / 10
 }
 
-
-case class CharacterParameter(
-                               var experience: Int = 0,
-                               var hitpoint:   Int = 0,
-                               var attack:     Int = 0,
-                               var defence:    Int = 0,
-                               var agility:    Int = 0,
-                               var dexterity:  Int = 0,
-                               var sanity:     Int = 0
-                               )
