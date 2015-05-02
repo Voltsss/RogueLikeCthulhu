@@ -6,7 +6,7 @@ package model
 
 class Player extends Character{
   var position:Position = Position(40,20)
-  val cp = CharacterParameter(
+  val charaParam = CharacterParameter(
     experience   = 0,
     hitpoint     = 100,
     attack       = 10,
@@ -18,8 +18,4 @@ class Player extends Character{
   def draw (exScreen: Screen ) : Screen = {
     overwritePositions(Array(model.Position(position.y,position.x)),exScreen,'@')
   }
-
-
-
-
 }
