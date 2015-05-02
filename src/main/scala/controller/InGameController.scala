@@ -7,8 +7,6 @@ import javafx.{scene => jfxs}
 import javafx.scene.{input => jfxsi}
 import model.DungeonGenerator
 
-import scala.util.Random
-
 abstract sealed class InputOrder
 case object Up extends InputOrder
 case object Down extends InputOrder
@@ -36,45 +34,14 @@ class InGameController(view: InGameViewController) {
 
   private var current_dungeon:Floor = null
   var player:Player = new Player()
-
-  view.deprecation_setInGameController(this)
-
-  var currentLevelEnemies:List[Enemy] = null
-
   def setNewgame(): Unit ={
-    player = new Player()
-    // TODO floorlevel
-    setNewFloor(0)
-  }
-
-  def setNewFloor(floorLevel : Int): Unit = {
-    current_dungeon = floorLevel match {
-      case 0 => DungeonGenerator.makeTestDungeon
-      case _ => DungeonGenerator.makeRandomDungeon(floorLevel)
-    }
+    //TODO Create dungeon of 1st level
+    current_dungeon = DungeonGenerator.makeTestDungeon
     Hit.setFloor(current_dungeon)
-    player.setPosition(getRandomPosition(current_dungeon))
-    currentLevelEnemies = (for(enemyNum <- 1 to 3) yield {
-      new Enemy(enemyKindID = 0,initPosition = getRandomPosition(current_dungeon), initLevel = 0)
-    }).toList
-
+    //TODO Create initialized PlayerCharacter
+    player = new Player()
   }
-
-  def getRandomPosition(dungeon: Floor): Position = {
-    val floorPanel = (
-        for(row <- 0 to dungeon.getHeight()-1; col <- 0 to dungeon.getWidth()-1) yield (col,row)
-      ).toVector.filter(
-      (tuple : (Int , Int)) => {
-        dungeon.getPanel (tuple._1, tuple._2) match {
-          case model.param.Panel.Floor => true
-          case _ => false
-        }
-      }
-    )
-    val randPosition:(Int,Int) = Random.shuffle(floorPanel).head
-    Position(randPosition._1,randPosition._2)
-  }
-
+  view.deprecation_setInGameController(this)
 
   def handleKeyInput(event : jfxs.input.KeyEvent){
     val inputKey:InputOrder = event.getCode() match {

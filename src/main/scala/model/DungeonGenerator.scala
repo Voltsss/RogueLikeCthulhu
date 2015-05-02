@@ -37,7 +37,7 @@ object DungeonGenerator {
 
   def makeTestDungeon = new TestDungeon make
 
-  def makeRandomDungeon(floorLevel: Int) = new TestDungeon make
+  def makeRandomDungeon = new TestDungeon make
 
   implicit class dungeon2String(dungeon: Vector[Vector[Panel]]) {
     def toAppearance: String = dungeon.map {_.map(_.appearance).mkString}.mkString("\n")
