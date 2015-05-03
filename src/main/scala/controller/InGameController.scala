@@ -48,31 +48,37 @@ class InGameController(view: InGameViewController) {
   }
 
   def setNewFloor(floorLevel : Int): Unit = {
+    // floor の生成
     current_dungeon = floorLevel match {
       case 0 => DungeonGenerator.makeTestDungeon
       case _ => DungeonGenerator.makeRandomDungeon(floorLevel)
     }
+    // floor を Hit へ登録
     Hit.setFloor(current_dungeon)
-    player.setPosition(getRandomPosition(current_dungeon))
-    currentLevelEnemies = (for(enemyNum <- 1 to 3) yield {
-      new Enemy(enemyKindID = 0,initPosition = getRandomPosition(current_dungeon), initLevel = 0)
+
+    // Character の配置
+    val positionList : List[Position] = getRandomPositionList(current_dungeon)
+    player.setPosition(positionList(0))
+    currentLevelEnemies = (for(enemyNum <- 1 to 30) yield {
+      new Enemy(enemyKindID = 0,initPosition = positionList.apply(enemyNum), initLevel = 0)
     }).toList
+
+    // Character を Hit へ登録
+    Hit.setCharacterList(player +: currentLevelEnemies)
 
   }
 
-  def getRandomPosition(dungeon: Floor): Position = {
-    val floorPanel = (
-        for(row <- 0 to dungeon.getHeight()-1; col <- 0 to dungeon.getWidth()-1) yield (col,row)
+  def getRandomPositionList(dungeon: Floor): List[Position]= {
+    Random.shuffle(
+        for(row <- 0 to dungeon.getHeight()-1; col <- 0 to dungeon.getWidth()-1) yield Position(col = col,row = row)
       ).toVector.filter(
-      (tuple : (Int , Int)) => {
-        dungeon.getPanel (tuple._1, tuple._2) match {
+      (p : Position) => {
+        dungeon.getPanel (p.col, p.row) match {
           case model.param.Panel.Floor => true
           case _ => false
         }
       }
-    )
-    val randPosition:(Int,Int) = Random.shuffle(floorPanel).head
-    Position(randPosition._1,randPosition._2)
+    ).toList
   }
 
 
@@ -100,7 +106,7 @@ class InGameController(view: InGameViewController) {
 
     view.drawViewText()
 
-    println("testPlayerPosition" + player.getPosition)
+    println("testPlayerPosition" + player.getPositionNum)
   }
 
   def ingameKeyEvent(input:InputOrder): Unit ={

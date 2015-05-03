@@ -8,7 +8,7 @@ import param.Panel
 
 case class Floor(data: Vector[Vector[Panel]]){
   def isEnter(position: Position):Boolean = {
-    data(position.y).apply(position.x).isEnter
+    data(position.row).apply(position.col).isEnter
   }
 
   def getWidth() : Int = {

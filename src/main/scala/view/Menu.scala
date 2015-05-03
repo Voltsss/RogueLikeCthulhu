@@ -71,15 +71,15 @@ class Menu(menuList:Array[String]) extends Drawable {
     val menuWidth = calcMenuWidth(exScreen)
     val menuHeight = calcMenuHeight(exScreen)
 
-    val topLine = (Array.range(viewVal.vmLeft ,viewVal.vmLeft+menuWidth+2) zip Stream.continually(viewVal.vmTop)).map(t=>Position(x=t._2,y=t._1))
-    val buttomLine = (Array.range(viewVal.vmLeft,viewVal.vmLeft+menuWidth+2) zip Stream.continually(viewVal.vmTop+menuHeight)).map(t=>Position(x=t._2+1,y=t._1))
-    val leftLine = (Array.range(viewVal.vmTop ,viewVal.vmTop+menuHeight+2) zip Stream.continually(viewVal.vmLeft)).map(t=>Position(x=t._1,y=t._2))
-    val rightLine = (Array.range(viewVal.vmTop ,viewVal.vmTop+menuHeight+2) zip Stream.continually(viewVal.vmLeft+menuWidth)).map(t=>Position(x=t._1 ,y=t._2+1))
+    val topLine = (Array.range(viewVal.vmLeft ,viewVal.vmLeft+menuWidth+2) zip Stream.continually(viewVal.vmTop)).map(t=>Position(col=t._2,row=t._1))
+    val buttomLine = (Array.range(viewVal.vmLeft,viewVal.vmLeft+menuWidth+2) zip Stream.continually(viewVal.vmTop+menuHeight)).map(t=>Position(col=t._2+1,row=t._1))
+    val leftLine = (Array.range(viewVal.vmTop ,viewVal.vmTop+menuHeight+2) zip Stream.continually(viewVal.vmLeft)).map(t=>Position(col=t._1,row=t._2))
+    val rightLine = (Array.range(viewVal.vmTop ,viewVal.vmTop+menuHeight+2) zip Stream.continually(viewVal.vmLeft+menuWidth)).map(t=>Position(col=t._1 ,row=t._2+1))
     val corner = Array(
-      Position(y=viewVal.vmLeft,x=viewVal.vmTop),
-      Position(y=viewVal.vmLeft+menuWidth+1,x=viewVal.vmTop),
-      Position(y=viewVal.vmLeft,x=viewVal.vmTop+menuHeight+1),
-      Position(y=viewVal.vmLeft+menuWidth+1,x=viewVal.vmTop+menuHeight+1))
+      Position(row=viewVal.vmLeft,col=viewVal.vmTop),
+      Position(row=viewVal.vmLeft+menuWidth+1,col=viewVal.vmTop),
+      Position(row=viewVal.vmLeft,col=viewVal.vmTop+menuHeight+1),
+      Position(row=viewVal.vmLeft+menuWidth+1,col=viewVal.vmTop+menuHeight+1))
 
     val topped = overwritePositions(topLine,exScreen,'-')
     val buttomed = overwritePositions(buttomLine,topped,'-')
