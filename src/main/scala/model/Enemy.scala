@@ -34,10 +34,10 @@ object EnemyParameterGenerator{
   def getParam(enemyKindID : Int):CharacterParameter = {
     enemyKindID match {
       case 0 => CharacterParameter(
-        hitpoint = 11, attack =11, defence = 11, agility = 11, dexterity = 11, sanity = 11 //TestID 仮パラメタ
+        name = "testEnemy",hitpoint = 11, attack =11, defence = 11, agility = 11, dexterity = 11, sanity = 11 //TestID 仮パラメタ
       )
       case _ => CharacterParameter(
-        hitpoint = 1, attack =1, defence =1, agility =1, dexterity =1, sanity =1
+        name = "ErrorEnemy",hitpoint = 1, attack =1, defence =1, agility =1, dexterity =1, sanity =1
       )
     }
   }

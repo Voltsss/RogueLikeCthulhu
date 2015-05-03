@@ -7,9 +7,10 @@ package model
 class Player extends Character{
   var position:Position = Position(40,20)
   val charaParam = CharacterParameter(
+    name         = "Player",
     experience   = 0,
     hitpoint     = 100,
-    attack       = 10,
+    attack       = 20,
     defence      = 3,
     agility      = 10,
     dexterity    = 10,
