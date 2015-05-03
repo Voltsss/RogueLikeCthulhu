@@ -16,7 +16,7 @@ class Enemy(
 
   def draw (exScreen: Screen): Screen =
   {
-    overwritePositions(Array(model.Position(position.y, position.x)), exScreen, enemyChar)
+    overwritePositions(Array(model.Position(position.row, position.col)), exScreen, enemyChar)
   }
 
 }

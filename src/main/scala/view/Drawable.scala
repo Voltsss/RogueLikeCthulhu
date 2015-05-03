@@ -22,7 +22,7 @@ trait Drawable {
   }
 
   def overwritePoint( p:Position, exScreen:Screen,char:Char):Screen ={
-    exScreen.updated(p.x,exScreen(p.x).updated(p.y,Some(char.toString)))
+    exScreen.updated(p.col,exScreen(p.col).updated(p.row,Some(char.toString)))
   }
 
   def screenEmpty ( width : Int , height: Int ) : Screen = {

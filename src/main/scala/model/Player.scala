@@ -16,6 +16,6 @@ class Player extends Character{
     sanity       = 10
   )
   def draw (exScreen: Screen ) : Screen = {
-    overwritePositions(Array(model.Position(position.y,position.x)),exScreen,'@')
+    overwritePositions(Array(model.Position(position.row,position.col)),exScreen,'@')
   }
 }
