@@ -9,7 +9,7 @@ trait Character extends Drawable {
 
   def getPositionNum: (Int, Int) = (position.col, position.row)
 
-  def getPostion : Position = position
+  def getPosition : Position = position
 
   def setPosition(col: Int, row: Int): Unit = {
     position = new Position(col,row)
@@ -21,41 +21,14 @@ trait Character extends Drawable {
   def setX(x: Int): Unit = setPosition(x, position.row)
   def setY(y: Int): Unit = setPosition(position.col, y)
 
-//  def moveRight = if(Hit.isEnter(Position(position.col + 1, position.row))) position = new Position(position.col + 1, position.row)
-//  def moveLeft  = if(Hit.isEnter(Position(position.col - 1, position.row))) position = new Position(position.col - 1, position.row)
-//  def moveUp    = if(Hit.isEnter(Position(position.col, position.row - 1))) position = new Position(position.col, position.row - 1)
-//  def moveDown  = if(Hit.isEnter(Position(position.col, position.row + 1))) position = new Position(position.col, position.row + 1)
-//  def moveUpRight = if(Hit.isEnter(Position(position.col + 1, position.row - 1))) position = new Position(position.col + 1, position.row - 1)
-//  def moveUpLeft = if(Hit.isEnter(Position(position.col - 1, position.row - 1))) position = new Position(position.col - 1, position.row - 1)
-//  def moveDownRight = if(Hit.isEnter(Position(position.col + 1, position.row + 1))) position = new Position(position.col + 1, position.row + 1)
-//  def moveDownLeft = if(Hit.isEnter(Position(position.col - 1, position.row + 1))) position = new Position(position.col - 1, position.row + 1)
-
-  def moveRight     = moveAndAttack(Position(position.col + 1, position.row))
-  def moveLeft      = moveAndAttack(Position(position.col - 1, position.row))
-  def moveUp        = moveAndAttack(Position(position.col, position.row - 1))
-  def moveDown      = moveAndAttack(Position(position.col, position.row + 1))
-  def moveUpRight   = moveAndAttack(Position(position.col + 1, position.row - 1))
-  def moveUpLeft    = moveAndAttack(Position(position.col - 1, position.row - 1))
-  def moveDownRight = moveAndAttack(Position(position.col + 1, position.row + 1))
-  def moveDownLeft  = moveAndAttack(Position(position.col - 1, position.row + 1))
-
-  def moveAndAttack(nextPosition : Position) = {
-    if(Hit.isEnter(nextPosition)){
-      position = nextPosition
-    }else if(Hit.isEnemy(nextPosition)){
-      Hit.getEnemy(nextPosition) match {
-        case Some(e)  => attack(e)
-        case _        =>
-      }
-    }
-  }
-
-  def attack(target: Character) = {
-    print(this.getName + " is Attacked " + target.getName + " OldHP: " + target.getHitpoint )
-    val damage : Int = if(this.getAttack > target.getDefence) this.getAttack - target.getDefence else 0
-    target.setHitpoint(target.getHitpoint - damage)
-    println(" NewHP: " + target.getHitpoint)
-  }
+  def moveRight     = if(Hit.isEnter(position.offsetCopy(model.Right    ))) position = position.offsetCopy(model.Right)
+  def moveLeft      = if(Hit.isEnter(position.offsetCopy(model.Left     ))) position = position.offsetCopy(model.Left)
+  def moveUp        = if(Hit.isEnter(position.offsetCopy(model.Up       ))) position = position.offsetCopy(model.Up)
+  def moveDown      = if(Hit.isEnter(position.offsetCopy(model.Down     ))) position = position.offsetCopy(model.Down)
+  def moveUpRight   = if(Hit.isEnter(position.offsetCopy(model.UpRight  ))) position = position.offsetCopy(model.UpRight)
+  def moveUpLeft    = if(Hit.isEnter(position.offsetCopy(model.UpLeft   ))) position = position.offsetCopy(model.UpLeft)
+  def moveDownRight = if(Hit.isEnter(position.offsetCopy(model.DownRight))) position = position.offsetCopy(model.DownRight)
+  def moveDownLeft  = if(Hit.isEnter(position.offsetCopy(model.DownLeft ))) position = position.offsetCopy(model.DownLeft)
 
   def setExperience(v: Int) = charaParam.experience = v
   def setHitpoint(v: Int)   = charaParam.hitpoint = v

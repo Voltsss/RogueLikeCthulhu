@@ -8,6 +8,7 @@ import javafx.scene.{input => jfxsi}
 import model.DungeonGenerator
 
 import scala.util.Random
+import scalaz.Order
 
 abstract sealed class InputOrder
 case object Up extends InputOrder
@@ -27,12 +28,6 @@ case object NoneInput extends InputOrder
 object InGameController {
 
   var topMenuMode:Boolean = false
-
-  val topMenuList = Array("item_tmp","status_tmp","option_tmp","debug_tmp")
-  var topMenuCursor:Int = 0
-  val topMenuCursorMax = 3
-
-  var topMenuChoice = ""
 
   private var current_dungeon:Floor = null
   var player:Player = new Player()
@@ -109,14 +104,14 @@ object InGameController {
 
   def ingameKeyEvent(input:InputOrder): Unit ={
     input match {
-      case Up       =>  player.moveUp
-      case Right    =>  player.moveRight
-      case Left     =>  player.moveLeft
-      case Down     =>  player.moveDown
-      case UpRight  =>  player.moveUpRight
-      case UpLeft   =>  player.moveUpLeft
-      case DownRight=>  player.moveDownRight
-      case DownLeft =>  player.moveDownLeft
+      case Up       =>  moveAndAttack(player,player.getPosition.offsetCopy(model.Up))
+      case Down     =>  moveAndAttack(player,player.getPosition.offsetCopy(model.Down))
+      case Right    =>  moveAndAttack(player,player.getPosition.offsetCopy(model.Right))
+      case Left     =>  moveAndAttack(player,player.getPosition.offsetCopy(model.Left))
+      case UpRight  =>  moveAndAttack(player,player.getPosition.offsetCopy(model.UpRight))
+      case UpLeft   =>  moveAndAttack(player,player.getPosition.offsetCopy(model.UpLeft))
+      case DownRight=>  moveAndAttack(player,player.getPosition.offsetCopy(model.DownRight))
+      case DownLeft =>  moveAndAttack(player,player.getPosition.offsetCopy(model.DownLeft))
       case Menu     =>  {
         topMenuMode=true
         InGameViewController.topMenuOpen()
@@ -137,6 +132,24 @@ object InGameController {
       case Enter  =>  InGameViewController.decide()
       case _      =>  assert(false,"Menu: Error : undefined input key")
     }
+  }
+
+  def moveAndAttack(mover : Character, nextPosition : Position) = {
+    if(Hit.isEnter(nextPosition)){
+      mover.position = nextPosition
+    }else if(Hit.isEnemy(nextPosition)){
+      Hit.getEnemy(nextPosition) match {
+        case Some(target)  => attack(mover, target)
+        case _        =>
+      }
+    }
+  }
+
+  def attack(attacker : Character, target : Character): Unit ={
+    print(attacker.getName + " is Attacked " + target.getName + " OldHP: " + target.getHitpoint )
+    val damage : Int = if(attacker.getAttack > target.getDefence) attacker.getAttack - target.getDefence else 0
+    target.setHitpoint(target.getHitpoint - damage)
+    println(" NewHP: " + target.getHitpoint)
   }
 
 }

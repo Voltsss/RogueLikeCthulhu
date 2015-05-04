@@ -23,11 +23,11 @@ object Hit {
   }
 
   def isEnemy(position: Position) : Boolean = {
-    characterList.count(c => c.getPostion.equals(position)) >= 1
+    characterList.count(c => c.getPosition.equals(position)) >= 1
   }
 
   def getEnemy(position: Position) : Option[Character]= {
-    val positionedCharacters : List[Character] = characterList.filter(c => c.getPostion.equals(position))
+    val positionedCharacters : List[Character] = characterList.filter(c => c.getPosition.equals(position))
     assert(positionedCharacters.size <= 1,"isEnemy:指定された座標に複数のCharacterがいます")
     positionedCharacters.headOption
   }
