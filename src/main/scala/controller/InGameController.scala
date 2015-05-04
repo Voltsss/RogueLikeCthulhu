@@ -24,7 +24,7 @@ case object Menu extends InputOrder
 case object StayAttack extends InputOrder
 case object NoneInput extends InputOrder
 
-class InGameController(view: InGameViewController) {
+object InGameController {
 
   var topMenuMode:Boolean = false
 
@@ -36,8 +36,6 @@ class InGameController(view: InGameViewController) {
 
   private var current_dungeon:Floor = null
   var player:Player = new Player()
-
-  view.deprecation_setInGameController(this)
 
   var currentLevelEnemies:List[Enemy] = null
 
@@ -104,7 +102,7 @@ class InGameController(view: InGameViewController) {
       ingameKeyEvent(inputKey)
     }
 
-    view.drawViewText()
+    InGameViewController.drawViewText()
 
     println("testPlayerPosition" + player.getPositionNum)
   }
@@ -121,7 +119,7 @@ class InGameController(view: InGameViewController) {
       case DownLeft =>  player.moveDownLeft
       case Menu     =>  {
         topMenuMode=true
-        view.topMenuOpen()
+        InGameViewController.topMenuOpen()
       }
       case _        =>  assert(false,"InGameInput : Undefined InputKey")
     }
@@ -132,11 +130,11 @@ class InGameController(view: InGameViewController) {
     input match {
       case Menu   =>  {
         topMenuMode = false
-        view.topMenuClose()
+        InGameViewController.topMenuClose()
       }
-      case Up     =>  view.cursorUp()
-      case Down   =>  view.cursorDown()
-      case Enter  =>  view.decide()
+      case Up     =>  InGameViewController.cursorUp()
+      case Down   =>  InGameViewController.cursorDown()
+      case Enter  =>  InGameViewController.decide()
       case _      =>  assert(false,"Menu: Error : undefined input key")
     }
   }

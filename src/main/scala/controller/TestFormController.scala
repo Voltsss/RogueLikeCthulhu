@@ -14,8 +14,6 @@ import javafx.scene.{control => jfxsc}
 import view._
 
 class TestFormController extends jfxf.Initializable{
-  val inGameViewController = new InGameViewController
-  val inGameController = new InGameController(inGameViewController)
 
   @FXML
   private var mainText: jfxsc.Label = _
@@ -36,13 +34,13 @@ class TestFormController extends jfxf.Initializable{
   @FXML
   private def handleKeyReleased(event: jfxs.input.KeyEvent): Unit ={
     // インゲームへ入力移譲
-    inGameController.handleKeyInput(event)
+    InGameController.handleKeyInput(event)
   }
 
   def initialize(url:URL, rb : util.ResourceBundle){
     mainText.setText("When Initialize inject TEXT")
-    inGameViewController.setLabel(mainText)
-    inGameController.setNewgame()
+    InGameViewController.setLabel(mainText)
+    InGameController.setNewgame()
   }
 
 }

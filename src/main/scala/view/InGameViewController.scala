@@ -7,9 +7,8 @@ import model.{Enemy, FloorLens, DungeonGenerator, Floor}
 import model.param.Panel
 import scala.collection.mutable._
 
-class InGameViewController extends FloorLens {
+object InGameViewController extends FloorLens {
   private var viewLabel: jfxsc.Label = _
-  private var igc: InGameController = _
   private var menuStack: Stack[Menu] = Stack[Menu]()
   private val topMenuList = Array("item_tmp","status_tmp","option_tmp","debug_tmp")
 
@@ -17,10 +16,10 @@ class InGameViewController extends FloorLens {
     viewLabel = label
   }
 
-  // TODO reimplement and delete
-  def deprecation_setInGameController(controller: InGameController): Unit = {
-    igc = controller
-  }
+//  // TODO reimplement and delete
+//  def deprecation_setInGameController(controller: InGameController): Unit = {
+//    igc = controller
+//  }
 
   def topMenuOpen(): Unit = {
     menuStack.push(new Menu(topMenuList))
@@ -48,7 +47,7 @@ class InGameViewController extends FloorLens {
     // TODO get a data of dungeon
     val dungeonText : Vector[Vector[Option[String]]] = dungeonConvert(DungeonGenerator.makeTestDungeon)
 
-    val characterText = (igc.player +: igc.currentLevelEnemies).foldRight(dungeonText)((n,z)=> n.draw(z))
+    val characterText = (InGameController.player +: InGameController.currentLevelEnemies).foldRight(dungeonText)((n,z)=> n.draw(z))
 
     val finalText = if(menuStack.isEmpty){
       characterText
