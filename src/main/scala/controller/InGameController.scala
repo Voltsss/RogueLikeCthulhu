@@ -29,10 +29,10 @@ object InGameController {
 
   var topMenuMode:Boolean = false
 
-  private var current_dungeon:Floor = null
+  var currentDungeon:Option[Floor] = None
   var player:Player = new Player()
 
-  var currentLevelEnemies:List[Enemy] = null
+  var currentLevelEnemies:List[Enemy] = List()
 
   def setNewgame(): Unit ={
     player = new Player()
@@ -42,22 +42,18 @@ object InGameController {
 
   def setNewFloor(floorLevel : Int): Unit = {
     // floor の生成
-    current_dungeon = floorLevel match {
-      case 0 => DungeonGenerator.makeTestDungeon
-      case _ => DungeonGenerator.makeRandomDungeon(floorLevel)
+    currentDungeon = floorLevel match {
+      case 0 => Some(DungeonGenerator.makeTestDungeon)
+      case _ => Some(DungeonGenerator.makeRandomDungeon(floorLevel))
     }
-    // floor を Hit へ登録
-    Hit.setFloor(current_dungeon)
 
     // Character の配置
-    val positionList : List[Position] = getRandomPositionList(current_dungeon)
+    val positionList : List[Position] = getRandomPositionList(currentDungeon match {case Some(f) => f case _ => DungeonGenerator.makeTestDungeon })
     player.setPosition(positionList(0))
     currentLevelEnemies = (for(enemyNum <- 1 to 30) yield {
       new Enemy(enemyKindID = 0,initPosition = positionList.apply(enemyNum), initLevel = 0)
     }).toList
 
-    // Character を Hit へ登録
-    Hit.setCharacterList(player +: currentLevelEnemies)
 
   }
 
@@ -137,8 +133,8 @@ object InGameController {
   def moveAndAttack(mover : Character, nextPosition : Position) = {
     if(Hit.isEnter(nextPosition)){
       mover.position = nextPosition
-    }else if(Hit.isEnemy(nextPosition)){
-      Hit.getEnemy(nextPosition) match {
+    }else if(Hit.isInCharacter(nextPosition)){
+      Hit.getInCharacter(nextPosition) match {
         case Some(target)  => attack(mover, target)
         case _        =>
       }
@@ -146,10 +142,19 @@ object InGameController {
   }
 
   def attack(attacker : Character, target : Character): Unit ={
-    print(attacker.getName + " is Attacked " + target.getName + " OldHP: " + target.getHitpoint )
+    /*DEBUG*/print(attacker.getName + " is Attacked " + target.getName + " OldHP: " + target.getHitpoint )
     val damage : Int = if(attacker.getAttack > target.getDefence) attacker.getAttack - target.getDefence else 0
     target.setHitpoint(target.getHitpoint - damage)
-    println(" NewHP: " + target.getHitpoint)
+    /*DEBUG*/println(" NewHP: " + target.getHitpoint)
+
+    if(target.getHitpoint <= 0) {
+      slay(attacker,target)
+    }
+  }
+
+  def slay(attacker : Character, target: Character): Unit ={
+    /*DEBUG*/println(attacker.getName + " slain " + target.getName + " !")
+    currentLevelEnemies = currentLevelEnemies.filterNot((e : Enemy) => e eq target )
   }
 
 }
