@@ -2,6 +2,10 @@ package model
 
 import view.Drawable
 
+abstract sealed class CharacterState
+case object Alive extends CharacterState
+case object Dead extends CharacterState
+
 trait Character extends Drawable {
 
   var position: Position
@@ -31,7 +35,10 @@ trait Character extends Drawable {
   def moveDownLeft  = if(Hit.isEnter(position.offsetCopy(model.DownLeft ))) position = position.offsetCopy(model.DownLeft)
 
   def setExperience(v: Int) = charaParam.experience = v
-  def setHitpoint(v: Int)   = charaParam.hitpoint = v
+  def setHitpoint(v: Int)   = {
+    charaParam.hitpoint = v
+    updateState
+  }
   def setAttack(v: Int)     = charaParam.attack = v
   def setDefence(v: Int)    = charaParam.defence = v
   def setAgility(v: Int)    = charaParam.agility = v
@@ -47,8 +54,17 @@ trait Character extends Drawable {
   def getAgility    = charaParam.agility
   def getDexterity  = charaParam.dexterity
   def getSanity     = charaParam.sanity
+  def getState      = charaParam.state
 
   def getLevel = charaParam.experience / 10
+
+  def applyDamage(damage: Int) : CharacterState = {
+    setHitpoint(charaParam.hitpoint - damage)
+    updateState
+    charaParam.state
+  }
+
+  def updateState = charaParam.state = if(charaParam.hitpoint <= 0) Dead else Alive
 }
 
 
@@ -60,5 +76,6 @@ case class CharacterParameter(
                                var defence:     Int = 0,
                                var agility:     Int = 0,
                                var dexterity:   Int = 0,
-                               var sanity:      Int = 0
+                               var sanity:      Int = 0,
+                               var state:       CharacterState = Dead
                                )
