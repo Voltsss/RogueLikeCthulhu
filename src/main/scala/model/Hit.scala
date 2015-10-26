@@ -35,5 +35,15 @@ object Hit {
     positionedCharacters.headOption
   }
 
+  def isInItem(position: Position) : Boolean = {
+    (InGameController.currentLevelItems).count(i => i.getPosition.equals(position)) >= 1
+  }
+  def getInItem(position: Position) : Option[Item] = {
+    val positionedItem : List[Item] =
+      (InGameController.currentLevelItems).filter(i => i.getPosition.equals(position))
+    assert(positionedItem.size <= 1,"getInCharacterEnemy:指定された座標に複数のCharacterがいます")
+    positionedItem.headOption
+  }
+
 
 }

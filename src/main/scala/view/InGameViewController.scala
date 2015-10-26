@@ -46,9 +46,8 @@ object InGameViewController extends FloorLens {
   def drawViewText(): Unit = {
     // TODO get a data of dungeon
     val dungeonText : Vector[Vector[Option[String]]] = dungeonConvert(DungeonGenerator.makeTestDungeon)
-
-    val characterText = (InGameController.player +: InGameController.currentLevelEnemies).foldRight(dungeonText)((n,z)=> n.draw(z))
-
+    val itemText = InGameController.currentLevelItems.foldRight(dungeonText)((n,z)=> n.draw(z))
+    val characterText = (InGameController.player +: InGameController.currentLevelEnemies).foldRight(itemText)((n,z)=> n.draw(z))
     val finalText = if(menuStack.isEmpty){
       characterText
     }else{
