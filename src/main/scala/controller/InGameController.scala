@@ -142,14 +142,12 @@ object InGameController {
   }
 
   def attack(attacker : Character, target : Character): Unit ={
-    /*DEBUG*/print(attacker.getName + " is Attacked " + target.getName + " OldHP: " + target.getHitpoint )
+    /*DEBUG*/println(attacker.getName + " is Attacked " + target.getName + " OldHP: " + target.getHitpoint )
     val damage : Int = if(attacker.getAttack > target.getDefence) attacker.getAttack - target.getDefence else 0
-    target.setHitpoint(target.getHitpoint - damage)
-    /*DEBUG*/println(" NewHP: " + target.getHitpoint)
-
-    if(target.getHitpoint <= 0) {
+    if (target.applyDamage(damage) == Dead){
       slay(attacker,target)
     }
+    /*DEBUG*/println(" NewHP: " + target.getHitpoint)
   }
 
   def slay(attacker : Character, target: Character): Unit ={
