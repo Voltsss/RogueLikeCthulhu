@@ -70,6 +70,7 @@ trait Character extends Drawable {
 
 case class CharacterParameter(
                                name :           String,
+                               viewChar :       Char,
                                var experience:  Int = 0,
                                var hitpoint:    Int = 0,
                                var attack:      Int = 0,

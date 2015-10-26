@@ -8,6 +8,7 @@ class Player extends Character{
   var position:Position = Position(40,20)
   val charaParam = CharacterParameter(
     name         = "Player",
+    viewChar     = '@',
     experience   = 0,
     hitpoint     = 100,
     attack       = 20,
