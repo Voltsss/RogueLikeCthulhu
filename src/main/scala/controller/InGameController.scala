@@ -33,6 +33,7 @@ object InGameController {
   var player:Player = new Player()
 
   var currentLevelEnemies:List[Enemy] = List()
+  var currentLevelItems:List[Item] = List()
 
   def setNewgame(): Unit ={
     player = new Player()
@@ -52,6 +53,11 @@ object InGameController {
     player.setPosition(positionList(0))
     currentLevelEnemies = (for(enemyNum <- 1 to 30) yield {
       new Enemy(enemyKindID = 0,initPosition = positionList.apply(enemyNum), initLevel = 0)
+    }).toList
+
+    // Item の配置
+    currentLevelItems = (for(itemNum <- 31 to 35) yield {
+      new Item(itemKindID = 0,initPosition = positionList.apply(itemNum))
     }).toList
 
 
@@ -133,6 +139,13 @@ object InGameController {
   def moveAndAttack(mover : Character, nextPosition : Position) = {
     if(Hit.isEnter(nextPosition)){
       mover.position = nextPosition
+      if(Hit.isInItem(nextPosition)){
+        Hit.getInItem(nextPosition) match {
+          case Some(i) => takeItem(i)
+          case _ =>
+        }
+
+      }
     }else if(Hit.isInCharacter(nextPosition)){
       Hit.getInCharacter(nextPosition) match {
         case Some(target)  => attack(mover, target)
@@ -155,6 +168,10 @@ object InGameController {
     currentLevelEnemies = currentLevelEnemies.filterNot((e : Enemy) => e eq target )
   }
 
+  def takeItem(targetItem: Item): Unit = {
+    /*DEBUG*/ println("GET ITEM!")
+    currentLevelItems = currentLevelItems.filterNot((i : Item) => i eq targetItem)
+  }
 }
 
 
