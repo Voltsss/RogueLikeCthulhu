@@ -11,6 +11,7 @@ class Item(
             ) extends Drawable{
   val position:Position = initPosition
   val char:Char = ItemGenerator.getChar(itemKindID)
+  val Name:String = ItemGenerator.getName(itemKindID)
   val itemID:Int = itemKindID
 
   def draw (exScreen: Screen): Screen =
@@ -28,6 +29,11 @@ object ItemGenerator{
       case 0 => '/'
       case _ => '|'
     }
-
+  }
+  def getName(itemKindID : Int): String = {
+    itemKindID match {
+      case 0 => "HinokiStick"
+      case _ => "DEBUG ITEM"
+    }
   }
 }

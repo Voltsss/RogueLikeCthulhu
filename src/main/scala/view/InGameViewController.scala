@@ -22,7 +22,7 @@ object InGameViewController extends FloorLens {
 //  }
 
   def topMenuOpen(): Unit = {
-    menuStack.push(new Menu(topMenuList))
+    menuStack.push(new Menu(TopMenu,topMenuList))
   }
 
   def topMenuClose(): Unit = {
@@ -40,7 +40,17 @@ object InGameViewController extends FloorLens {
 
   def decide(): Unit = {
     //TODO
-    println(s"InGameViewController:MENU DECIDE:${topMenuList(menuStack.head.cursor)}")
+    //println(s"InGameViewController:MENU DECIDE:${topMenuList(menuStack.head.cursor)}")
+
+    menuStack.head.getMenuControl match {
+      case TopMenu => menuStack.push(new Menu(ItemMenu,InGameController.player.inventory.map(_.Name).toArray))
+      case ItemMenu => println(s"InGameViewController:ItemMenu DECIDE:${menuStack.head.getMenuList(menuStack.head.cursor)}")
+    }
+  }
+
+  def cancel(): Unit = {
+    menuStack.pop()
+    if (menuStack.isEmpty) InGameController.menuClose
   }
 
   def drawViewText(): Unit = {

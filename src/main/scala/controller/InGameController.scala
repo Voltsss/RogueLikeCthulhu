@@ -1,5 +1,7 @@
 package controller
 
+import javax.security.auth.login.FailedLoginException
+
 import model._
 import view._
 import model.Position
@@ -90,6 +92,7 @@ object InGameController {
       case jfxsi.KeyCode.C      =>  DownRight
       case jfxsi.KeyCode.M      =>  Menu
       case jfxsi.KeyCode.ENTER  =>  Enter
+      case jfxsi.KeyCode.BACK_SPACE => Cancel
       case _    =>  NoneInput
     }
 
@@ -125,15 +128,18 @@ object InGameController {
   def menuKeyEvent(input: InputOrder): Unit ={
     // TODO need menu API
     input match {
-      case Menu   =>  {
-        topMenuMode = false
-        InGameViewController.topMenuClose()
-      }
+      case Menu   =>  menuClose
       case Up     =>  InGameViewController.cursorUp()
       case Down   =>  InGameViewController.cursorDown()
       case Enter  =>  InGameViewController.decide()
+      case Cancel =>  InGameViewController.cancel()
       case _      =>  assert(false,"Menu: Error : undefined input key")
     }
+  }
+
+  def menuClose : Unit ={
+    topMenuMode = false
+    InGameViewController.topMenuClose()
   }
 
   def moveAndAttack(mover : Character, nextPosition : Position) = {
@@ -169,8 +175,14 @@ object InGameController {
   }
 
   def takeItem(targetItem: Item): Unit = {
-    /*DEBUG*/ println("GET ITEM!")
-    currentLevelItems = currentLevelItems.filterNot((i : Item) => i eq targetItem)
+    player.tryTakeItem(targetItem) match {
+      case Success => {
+        currentLevelItems = currentLevelItems.filterNot((i : Item) => i eq targetItem)
+        /*DEBUG*/ println("GET ITEM!")
+      }
+      case InventoryFull => /*DEBUG*/ println("Failed take item !")
+    }
+    //currentLevelItems = currentLevelItems.filterNot((i : Item) => i eq targetItem)
   }
 }
 
