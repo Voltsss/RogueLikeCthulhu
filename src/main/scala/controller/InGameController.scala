@@ -1,5 +1,7 @@
 package controller
 
+import javax.security.auth.login.FailedLoginException
+
 import model._
 import view._
 import model.Position
@@ -169,8 +171,14 @@ object InGameController {
   }
 
   def takeItem(targetItem: Item): Unit = {
-    /*DEBUG*/ println("GET ITEM!")
-    currentLevelItems = currentLevelItems.filterNot((i : Item) => i eq targetItem)
+    player.tryTakeItem(targetItem) match {
+      case Success => {
+        currentLevelItems = currentLevelItems.filterNot((i : Item) => i eq targetItem)
+        /*DEBUG*/ println("GET ITEM!")
+      }
+      case InventoryFull => /*DEBUG*/ println("Failed take item !")
+    }
+    //currentLevelItems = currentLevelItems.filterNot((i : Item) => i eq targetItem)
   }
 }
 
