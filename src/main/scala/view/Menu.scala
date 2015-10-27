@@ -20,9 +20,15 @@ object viewVal {
   val cursor : String = ">"
 }
 
-class Menu(menuList:Array[String]) extends Drawable {
+abstract sealed class MenuControl
+case object TopMenu extends MenuControl
+case object ItemMenu extends MenuControl
+
+
+class Menu(menuControl: MenuControl,var menuList:Array[String]) extends Drawable {
   var cursor:Int = 0
   val cursorMax:Int = menuList.size-1
+  if(menuList.isEmpty) menuList = Array("-")
 
   def cursorUp():Unit = {
     cursor = if(cursor <= 0) cursorMax else cursor-1
@@ -34,6 +40,8 @@ class Menu(menuList:Array[String]) extends Drawable {
 
   //abstract def decide(): Unit
 
+  def getMenuControl:MenuControl = menuControl
+  def getMenuList:scala.collection.immutable.List[String] = menuList.toList
 
   def draw(exScreen:Screen):Screen = {
     //menuListOverWrite(frameOverWrite(exScreen))
