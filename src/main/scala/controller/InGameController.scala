@@ -92,6 +92,7 @@ object InGameController {
       case jfxsi.KeyCode.C      =>  DownRight
       case jfxsi.KeyCode.M      =>  Menu
       case jfxsi.KeyCode.ENTER  =>  Enter
+      case jfxsi.KeyCode.BACK_SPACE => Cancel
       case _    =>  NoneInput
     }
 
@@ -127,15 +128,18 @@ object InGameController {
   def menuKeyEvent(input: InputOrder): Unit ={
     // TODO need menu API
     input match {
-      case Menu   =>  {
-        topMenuMode = false
-        InGameViewController.topMenuClose()
-      }
+      case Menu   =>  menuClose
       case Up     =>  InGameViewController.cursorUp()
       case Down   =>  InGameViewController.cursorDown()
       case Enter  =>  InGameViewController.decide()
+      case Cancel =>  InGameViewController.cancel()
       case _      =>  assert(false,"Menu: Error : undefined input key")
     }
+  }
+
+  def menuClose : Unit ={
+    topMenuMode = false
+    InGameViewController.topMenuClose()
   }
 
   def moveAndAttack(mover : Character, nextPosition : Position) = {

@@ -48,6 +48,11 @@ object InGameViewController extends FloorLens {
     }
   }
 
+  def cancel(): Unit = {
+    menuStack.pop()
+    if (menuStack.isEmpty) InGameController.menuClose
+  }
+
   def drawViewText(): Unit = {
     // TODO get a data of dungeon
     val dungeonText : Vector[Vector[Option[String]]] = dungeonConvert(DungeonGenerator.makeTestDungeon)
