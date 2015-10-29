@@ -22,7 +22,13 @@ object InGameViewController extends FloorLens {
 //  }
 
   def topMenuOpen(): Unit = {
-    menuStack.push(new Menu(TopMenu,topMenuList))
+    val err : () => Option[Menu] = () => {assert(true,"NONE MENU ITEM is Desided!!");None}
+    val names = Array("item_tmp","status_tmp","option_tmp","debug_tmp")
+    def itemMenuOpen(): () => Option[Menu] = {
+      () => Some(new Menu(InGameController.player.inventory.map(item => new MenuItem(item.Name,err)).toArray))
+    }
+    val list = Array() :+ (new MenuItem("item_tmp" , itemMenuOpen())) :+ (new MenuItem("status_tmp" , err)):+ (new MenuItem("option_tmp" , err)):+ (new MenuItem("debug_tmp" , err))
+    menuStack.push(new Menu(list))
   }
 
   def topMenuClose(): Unit = {
@@ -30,22 +36,26 @@ object InGameViewController extends FloorLens {
   }
 
   def cursorUp(): Unit = {
-    menuStack.head.cursorUp()
+    menuStack.head.cursorUp(menuStack.head.menuList.size)
 
   }
 
   def cursorDown(): Unit = {
-    menuStack.head.cursorDown()
+    menuStack.head.cursorDown(menuStack.head.menuList.size)
   }
 
   def decide(): Unit = {
     //TODO
     //println(s"InGameViewController:MENU DECIDE:${topMenuList(menuStack.head.cursor)}")
 
-    menuStack.head.getMenuControl match {
-      case TopMenu => menuStack.push(new Menu(ItemMenu,InGameController.player.inventory.map(_.Name).toArray))
-      case ItemMenu => println(s"InGameViewController:ItemMenu DECIDE:${menuStack.head.getMenuList(menuStack.head.cursor)}")
+    menuStack.head.cursorDiside(menuStack.head.menuList).apply() match {
+      case Some(m) => menuStack.push(m)//menuStack.push(menuStack.head.cursorDiside(menuStack.head.menuList).get)
+      case None => assert(true,"!!")
     }
+
+//    menuStack.head.getMenuControl match {
+//      case ItemMenu => println(s"InGameViewController:ItemMenu DECIDE:${menuStack.head.getMenuList(menuStack.head.cursor)}")
+//    }
   }
 
   def cancel(): Unit = {
