@@ -25,7 +25,7 @@ object InGameViewController extends FloorLens {
     val err : () => Option[Menu] = () => {assert(true,"NONE MENU ITEM is Desided!!");None}
     val names = Array("item_tmp","status_tmp","option_tmp","debug_tmp")
     def itemMenuOpen(): () => Option[Menu] = {
-      () => Some(new Menu(InGameController.player.inventory.map(item => new MenuItem(item.Name,err)).toArray))
+      () => Some(new Menu(InGameController.player.inventory.map(item => new MenuItem(item.name,err)).toArray))
     }
     val list = Array() :+ (new MenuItem("item_tmp" , itemMenuOpen())) :+ (new MenuItem("status_tmp" , err)):+ (new MenuItem("option_tmp" , err)):+ (new MenuItem("debug_tmp" , err))
     menuStack.push(new Menu(list))
