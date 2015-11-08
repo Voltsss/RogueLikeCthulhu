@@ -4,16 +4,25 @@ import java.util.Date
 
 name := "roguelike"
 
-version := "0.0.1-SNAPSHOT"
+scalaVersion := "2.11.7"
 
-scalaVersion := "2.10.3"
-
-scalacOptions in Compile ++= Seq("-feature")
+scalacOptions in Compile ++= Seq(
+  "-deprecation",
+  "-feature",
+  "-Xlint",
+  "-Ywarn-dead-code",
+  "-Ywarn-numeric-widen",
+  "-Ywarn-unused-import",
+  "-language:higherKinds",
+  "-language:postfixOps",
+  "-language:implicitConversions"
+)
 
 libraryDependencies ++= Seq(
-  "org.scalafx" % "scalafx_2.10" % "8.0.0-R4",
-  "com.chuusai" % "shapeless_2.10.3" % "2.0.0",
-  "org.scalaz" % "scalaz-core_2.10" % "7.0.6"
+  "org.scalafx"                 %% "scalafx"       % "8.0.0-R4",
+  "com.github.julien-truffaut"  %% "monocle-core"  % "1.2.0-M1",
+  "com.github.julien-truffaut"  %% "monocle-macro" % "1.2.0-M1",
+  "org.scalaz"                  %% "scalaz-core"   % "7.1.4"
 )
 
 jarName in assembly := "roguelike-" + version.value + ".jar"
