@@ -1,6 +1,6 @@
-package model
+package roguelike.model
 
-import controller.InGameController
+import roguelike.controller.InGameController
 
 /**
  * Created by volts on 15/04/19.

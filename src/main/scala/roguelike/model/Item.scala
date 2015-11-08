@@ -1,6 +1,6 @@
-package model
+package roguelike.model
 
-import view.Drawable
+import roguelike.view.Drawable
 
 /**
  * Created by volts on 15/10/27.
@@ -17,7 +17,7 @@ class Item(
 
   def draw (exScreen: Screen): Screen =
   {
-    overwritePositions(Array(model.Position(position.row, position.col)), exScreen, char)
+    overwritePositions(Array(Position(position.row, position.col)), exScreen, char)
   }
 
   def getPosition : Position = position

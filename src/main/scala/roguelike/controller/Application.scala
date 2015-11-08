@@ -1,4 +1,4 @@
-package controller
+package roguelike.controller
 
 import scalafx.Includes._
 import scalafx.application.JFXApp

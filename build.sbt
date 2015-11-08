@@ -27,7 +27,7 @@ libraryDependencies ++= Seq(
 
 jarName in assembly := "roguelike-" + version.value + ".jar"
 
-mainClass in assembly := Some("controller.World")
+mainClass in assembly := Some("roguelike.controller.World")
 
 assemblySettings
 

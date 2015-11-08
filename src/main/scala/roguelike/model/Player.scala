@@ -1,4 +1,4 @@
-package model
+package roguelike.model
 
 
 
@@ -36,7 +36,7 @@ class Player extends Character{
   var equipWeapon : Item = null
 
   def draw (exScreen: Screen ) : Screen = {
-    overwritePositions(Array(model.Position(position.row,position.col)),exScreen,'@')
+    overwritePositions(Array(Position(position.row,position.col)),exScreen,'@')
   }
 
   def tryTakeItem (item : Item) : TakeItemProperty = {
