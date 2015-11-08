@@ -1,11 +1,11 @@
-package view
+package roguelike.view
 
 /**
  * Created by volts on 14/10/02.
  */
 
-import model.Position
-import model.param.Panel
+import roguelike.model.Position
+import roguelike.model.param.Panel
 
 object viewVal {
   val vmTop : Int = 3

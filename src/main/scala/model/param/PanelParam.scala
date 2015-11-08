@@ -1,4 +1,4 @@
-package model.param
+package roguelike.model.param
 
 abstract sealed class Panel(val s: String)
 

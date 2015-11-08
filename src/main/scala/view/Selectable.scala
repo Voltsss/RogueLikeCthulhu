@@ -1,4 +1,4 @@
-package view
+package roguelike.view
 
 /**
  * Created by volts on 15/10/29.
@@ -14,7 +14,7 @@ trait Selectable {
     cursor = if(cursor >= maxIndex) 0 else cursor+1
   }
 
-  def cursorDiside(list:Array[view.MenuItem]):() => Option[Menu] = {
+  def cursorDiside(list:Array[MenuItem]):() => Option[Menu] = {
     val err: Int => MenuItem = x => new MenuItem("none",() => {assert(true,"NONE MENU ITEM is Desided!!");None;})
     list.applyOrElse(cursor,err).f
 

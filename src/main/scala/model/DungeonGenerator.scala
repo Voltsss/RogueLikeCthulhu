@@ -1,13 +1,13 @@
-package model
+package roguelike.model
 
 import scala.io.Source
-import model.param.Panel
+import roguelike.model.param.Panel
 
 trait Generatable {
   def make: Floor
 }
 
-trait GeneratorFromFile extends Generatable with FloorLens{
+trait GeneratorFromFile extends Generatable {
 
   val fileName: String
 

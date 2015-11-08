@@ -1,6 +1,7 @@
-package model
+package roguelike.model
 
-import view.Drawable
+import roguelike.view.Drawable
+import roguelike.model
 
 abstract sealed class CharacterState
 case object Alive extends CharacterState

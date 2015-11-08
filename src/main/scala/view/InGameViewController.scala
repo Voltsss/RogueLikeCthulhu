@@ -1,13 +1,13 @@
-package view
+package roguelike.view
 
 import javafx.scene.{control => jfxsc}
 
-import controller._
-import model.{Enemy, FloorLens, DungeonGenerator, Floor}
-import model.param.Panel
+import roguelike.controller._
+import roguelike.model.{Enemy, DungeonGenerator, Floor}
+import roguelike.model.param.Panel
 import scala.collection.mutable._
 
-object InGameViewController extends FloorLens {
+object InGameViewController {
   private var viewLabel: jfxsc.Label = _
   private var menuStack: Stack[Menu] = Stack[Menu]()
   private val topMenuList = Array("item_tmp","status_tmp","option_tmp","debug_tmp")

@@ -1,11 +1,11 @@
-package view
+package roguelike.view
 
 
 /**
  * Created by volts on 14/09/28.
  */
-import model.Position
-import model.param.Panel
+import roguelike.model.Position
+import roguelike.model.param.Panel
 
 trait Drawable {
   type Screen = Vector[Vector[Option[String]]]

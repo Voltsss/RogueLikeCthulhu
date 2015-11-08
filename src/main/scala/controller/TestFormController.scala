@@ -1,4 +1,4 @@
-package controller
+package roguelike.controller
 
 import java.net.URL
 import java.util
@@ -11,7 +11,7 @@ import javafx.{event => jfxe}
 import javafx.{fxml => jfxf}
 import javafx.{scene => jfxs}
 import javafx.scene.{control => jfxsc}
-import view._
+import roguelike.view._
 
 class TestFormController extends jfxf.Initializable{
 

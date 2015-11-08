@@ -1,4 +1,4 @@
-package model
+package roguelike.model
 
 import scalaz._
 import Scalaz._

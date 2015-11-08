@@ -1,13 +1,14 @@
-package controller
+package roguelike.controller
 
 import javax.security.auth.login.FailedLoginException
 
-import model._
-import view._
-import model.Position
+import roguelike.view._
+import roguelike.model._
+import roguelike.model
+import roguelike.model.Position
+import roguelike.model.DungeonGenerator
 import javafx.{scene => jfxs}
 import javafx.scene.{input => jfxsi}
-import model.DungeonGenerator
 
 import scala.util.Random
 import scalaz.Order

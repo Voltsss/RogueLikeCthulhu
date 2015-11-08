@@ -1,4 +1,4 @@
-package model
+package roguelike.model
 
 /**
  * Created by volts on 15/05/02.
@@ -15,7 +15,7 @@ class Enemy(
 
   def draw (exScreen: Screen): Screen =
   {
-    overwritePositions(Array(model.Position(position.row, position.col)), exScreen, charaParam.viewChar)
+    overwritePositions(Array(Position(position.row, position.col)), exScreen, charaParam.viewChar)
   }
 
 }
