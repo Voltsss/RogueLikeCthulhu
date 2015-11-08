@@ -43,4 +43,3 @@ trait PositionLens {
   val yLens = Lens.lensu[Position, Int]((p, _row) => p.copy(row = _row), _.row)
 
 }
-

@@ -36,6 +36,4 @@ trait Drawable {
   def appearance(sc : Screen): Unit ={
 
   }
-  
-
 }

@@ -43,4 +43,3 @@ object DungeonGenerator {
     def toAppearance: String = dungeon.map {_.map(_.appearance).mkString}.mkString("\n")
   }
 }
-
