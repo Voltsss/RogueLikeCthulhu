@@ -185,5 +185,3 @@ object InGameController {
     //currentLevelItems = currentLevelItems.filterNot((i : Item) => i eq targetItem)
   }
 }
-
-

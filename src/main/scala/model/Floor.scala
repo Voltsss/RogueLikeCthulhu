@@ -38,4 +38,3 @@ trait FloorLens {
   def panel(p: Position): PLens[Floor, Panel] = panel(xLens.get(p), yLens.get(p))
 
 }
-
