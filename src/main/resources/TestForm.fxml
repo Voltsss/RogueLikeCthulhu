@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane layoutX="0.0" onKeyReleased="#handleKeyReleased" onKeyTyped="#handleKeyTyped" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controller.TestFormController">
+<AnchorPane layoutX="0.0" onKeyReleased="#handleKeyReleased" onKeyTyped="#handleKeyTyped" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="roguelike.controller.TestFormController">
   <!-- TODO Add Nodes -->
   <children>
     <Label fx:id="mainText" alignment="TOP_LEFT" prefHeight="385.0" prefWidth="572.0" styleClass="mainText" text="Labeltest" AnchorPane.bottomAnchor="81.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
