@@ -11,8 +11,9 @@ class Item(
             ) extends Drawable{
   val position:Position = initPosition
   val char:Char = ItemGenerator.getChar(itemKindID)
-  val Name:String = ItemGenerator.getName(itemKindID)
+  val name:String = ItemGenerator.getName(itemKindID)
   val itemID:Int = itemKindID
+  val weaponEquipable : Boolean = ItemGenerator.getWeaponEquipable(itemKindID)
 
   def draw (exScreen: Screen): Screen =
   {
@@ -34,6 +35,13 @@ object ItemGenerator{
     itemKindID match {
       case 0 => "HinokiStick"
       case _ => "DEBUG ITEM"
+    }
+  }
+
+  def getWeaponEquipable(itemKindID : Int) : Boolean = {
+    itemKindID match {
+      case 0 => true
+      case _ => false
     }
   }
 }

@@ -20,28 +20,18 @@ object viewVal {
   val cursor : String = ">"
 }
 
-abstract sealed class MenuControl
-case object TopMenu extends MenuControl
-case object ItemMenu extends MenuControl
 
 
-class Menu(menuControl: MenuControl,var menuList:Array[String]) extends Drawable {
-  var cursor:Int = 0
+class MenuItem(val name:String, val f:() => Option[Menu] )
+
+class Menu(var menuList:Array[MenuItem]) extends Drawable with Selectable {
   val cursorMax:Int = menuList.size-1
-  if(menuList.isEmpty) menuList = Array("-")
+  if(menuList.isEmpty) menuList = Array(new MenuItem("none",() => {assert(true,"NONE MENU ITEM is Desided!!");None;}))
 
-  def cursorUp():Unit = {
-    cursor = if(cursor <= 0) cursorMax else cursor-1
-  }
-
-  def cursorDown():Unit = {
-    cursor = if(cursor >= cursorMax) 0 else cursor+1
-  }
 
   //abstract def decide(): Unit
 
-  def getMenuControl:MenuControl = menuControl
-  def getMenuList:scala.collection.immutable.List[String] = menuList.toList
+  def getMenuList:scala.collection.immutable.List[String] = menuList.map(_.name).toList
 
   def draw(exScreen:Screen):Screen = {
     //menuListOverWrite(frameOverWrite(exScreen))
@@ -49,10 +39,10 @@ class Menu(menuControl: MenuControl,var menuList:Array[String]) extends Drawable
   }
 
   def calcMenuWidth(exScreen : Screen):Int = {
-    if ((menuList.max.length + viewVal.tpLeft + viewVal.tpRight + viewVal.cursorWidth) > (exScreen(0).size - viewVal.vmLeft - viewVal.vmRight)) {
+    if ((menuList.map(_.name).max.length + viewVal.tpLeft + viewVal.tpRight + viewVal.cursorWidth) > (exScreen(0).size - viewVal.vmLeft - viewVal.vmRight)) {
       exScreen(0).size - viewVal.vmLeft - viewVal.vmRight
     } else {
-      menuList.max.length + viewVal.tpLeft + viewVal.tpRight + viewVal.cursorWidth
+      menuList.map(_.name).max.length + viewVal.tpLeft + viewVal.tpRight + viewVal.cursorWidth
     }
   }
 
@@ -111,7 +101,7 @@ class Menu(menuControl: MenuControl,var menuList:Array[String]) extends Drawable
     val firstHeight = viewVal.vmTop + viewVal.tpTop +1
     var screen = exScreen
     for(menu <- menuList.zipWithIndex){
-      screen = screen.updated(firstHeight+menu._2,stringOverWrite(menu._1,firstWidth,screen(firstHeight+menu._2)))
+      screen = screen.updated(firstHeight+menu._2,stringOverWrite(menu._1.name,firstWidth,screen(firstHeight+menu._2)))
     }
     val returnScreen = screen
     returnScreen

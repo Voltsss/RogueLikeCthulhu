@@ -12,6 +12,10 @@ case object InventoryFull extends TakeItemProperty
 //case object PossessionMax extends TakeItemProperty
 
 
+abstract sealed class EquipItemProperty
+case object EquipSuccess extends EquipItemProperty
+case object UnknownFail extends EquipItemProperty
+
 class Player extends Character{
   var position:Position = Position(40,20)
   val charaParam = CharacterParameter(
@@ -27,7 +31,9 @@ class Player extends Character{
   )
 
   var inventory : List[Item] = List()
-  val inventoryMaxSize = 2
+  val inventoryMaxSize = 10
+
+  var equipWeapon : Item = null
 
   def draw (exScreen: Screen ) : Screen = {
     overwritePositions(Array(model.Position(position.row,position.col)),exScreen,'@')
@@ -50,5 +56,19 @@ class Player extends Character{
 
   private def canAddItemToInventory: Boolean = {
     inventory.size < inventoryMaxSize
+  }
+
+
+  def tryEquipWeapon (item:Item) : EquipItemProperty = {
+    if(canEquipItem(item)){
+      equipWeapon = item
+      EquipSuccess
+    }else{
+      UnknownFail
+    }
+  }
+
+  private def canEquipItem(item:Item): Boolean = {
+    item.weaponEquipable
   }
 }
