@@ -36,10 +36,3 @@ case class Position(col: Int, row: Int) {
     }
   }
 }
-
-trait PositionLens {
-
-  val xLens = Lens.lensu[Position, Int]((p, _col) => p.copy(col = _col), _.col)
-  val yLens = Lens.lensu[Position, Int]((p, _row) => p.copy(row = _row), _.row)
-
-}
